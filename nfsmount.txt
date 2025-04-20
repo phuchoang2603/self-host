@@ -1,0 +1,4 @@
+# UNCONFIGURED FSTAB FOR BASE SYSTEM
+192.168.1.2:/volume2/xpenology/downloader /mnt/downloader   nfs     vers=4,nofail,x-systemd.automount,x-systemd.requires=network-online.target,x-systemd.device-timeout=10s
+
+192.168.1.2:/volume1/xpenology/Synology/downloads/downloader /mnt/downloader nfs auto,nofail,noatime,nolock,intr,tcp,actimeo=1800 0 0
