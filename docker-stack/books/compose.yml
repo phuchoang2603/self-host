@@ -1,0 +1,30 @@
+services:
+  calibre-web-automated:
+    image: crocodilestick/calibre-web-automated:latest
+    container_name: calibre-web-automated
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TZ}
+    volumes:
+      - ${APPDATA}/calibre-web/config/:/config
+      - ${BOOK_FOLDER}/Ingest:/cwa-book-ingest
+      - ${BOOK_FOLDER}/Books:/calibre-library
+    ports:
+      - 8083:8083
+    restart: unless-stopped
+
+  audiobookshelf:
+    image: ghcr.io/advplyr/audiobookshelf:latest
+    container_name: audiobookshelf
+    environment:
+      - PUID=0
+      - PGID=0
+      - TZ=${TZ}
+    ports:
+      - 13378:80
+    volumes:
+      - ${APPDATA}/audiobookshelf/config:/config
+      - ${APPDATA}/audiobookshelf/metadata:/metadata
+      - ${BOOK_FOLDER}:/data
+    restart: unless-stopped

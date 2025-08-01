@@ -1,0 +1,17 @@
+services:
+  npmplus:
+    container_name: npmplus
+    image: docker.io/zoeyvid/npmplus:latest
+    restart: always
+    network_mode: bridge
+    ports:
+      - 80:80
+      - 81:81
+      - 443:443
+    volumes:
+      - ${APPDATA}/data:/data
+    environment:
+      - TZ=${TZ}
+      - ACME_EMAIL=${ACME_EMAIL}
+      - INITIAL_ADMIN_EMAIL=${ACME_EMAIL}
+      - INITIAL_ADMIN_PASSWORD=${ADMIN_PASSWORD}

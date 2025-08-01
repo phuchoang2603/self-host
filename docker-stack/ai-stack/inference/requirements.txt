@@ -1,0 +1,8 @@
+einops==0.8.1
+flash_attn==2.7.4.post1
+funasr==1.2.6
+Pillow==11.1.0
+torchvision==0.21.0
+tqdm==4.67.1
+transformers==4.51.0
+xinference==1.4.1

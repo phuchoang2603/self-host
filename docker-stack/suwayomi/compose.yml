@@ -1,0 +1,56 @@
+name: suwayomi
+services:
+  suwayomi:
+    container_name: suwayomi
+    environment:
+      - EXTENSION_REPOS=["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"]
+      - FLARESOLVERR_ENABLED=true
+      - FLARESOLVERR_URL=http://flaresolverr:8191
+      - TZ=${TZ}
+    hostname: suwayomi
+    image: ghcr.io/suwayomi/suwayomi-server:preview
+    ports:
+      - 4567:4567
+    restart: always
+    volumes:
+      - ${MANGA_FOLDER}:/home/suwayomi/data
+      - ${APPDATA}/data:/home/suwayomi/.local/share/Tachidesk
+
+  flaresolverr:
+    container_name: flaresolverr
+    environment:
+      - TZ=${TZ}
+    hostname: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    ports:
+      - 8191:8191
+    restart: unless-stopped
+
+  # manga-image-translator:
+  #   build:
+  #     context: ${APPDATA}/manga-image-translator
+  #   container_name: manga-image-translator
+  #   command: batch-script.py
+  #   volumes:
+  #     - ${APPDATA}/manga-image-translator/result:/app/result
+  #     - ${APPDATA}/manga-image-translator/detection:/app/detection
+  #     - ${APPDATA}/manga-image-translator/fonts:/app/fonts
+  #     - ${APPDATA}/manga-image-translator/inpainting:/app/inpainting
+  #     - ${APPDATA}/manga-image-translator/ocr:/app/ocr
+  #     - ${APPDATA}/manga-image-translator/text_mask:/app/text_mask
+  #     - ${APPDATA}/manga-image-translator/text_rendering:/app/text_rendering
+  #     - ${APPDATA}/manga-image-translator/translators:/app/translators
+  #     - ${APPDATA}/manga-image-translator/textblockdetector:/app/textblockdetector
+  #     - ${APPDATA}/manga-image-translator/textline_merge:/app/textline_merge
+  #     - ${APPDATA}/manga-image-translator/translate_demo.py:/app/translate_demo.py
+  #     - ${APPDATA}/manga-image-translator/web_main.py:/app/web_main.py
+  #     - ${APPDATA}/manga-image-translator/ui.html:/app/ui.html
+  #     - ${MANGA_FOLDER}:/app/data
+  #     - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
+  #   ipc: host
+  #   # For GPU
+  #   deploy:
+  #     resources:
+  #       reservations:
+  #         devices:
+  #           - capabilities: [gpu]

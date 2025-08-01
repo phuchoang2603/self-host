@@ -1,0 +1,25 @@
+version: "3.8"
+
+services:
+  rope_vnc:
+    image: asyafiqe/rope_vnc:11.8.0-cudnn8-devel-ubuntu22.04-icewm-visomaster-0.1.1-0.2
+    container_name: rope_vnc
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+    ports:
+      - "5901:5901"
+      - "6901:6901"
+      - "8099:8080"
+      - "8585:8585"
+    environment:
+      - VNC_PASSWORDLESS=true
+      - VNC_RESOLUTION=1920x1080
+    restart: unless-stopped
+    volumes:
+      - ${APPDATA}/input:/workspace/input
+      - ${APPDATA}/target:/workspace/target
+      - ${APPDATA}/output:/workspace/output
+

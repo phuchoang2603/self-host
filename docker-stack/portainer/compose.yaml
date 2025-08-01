@@ -1,0 +1,15 @@
+services:
+  portainer:
+    container_name: portainer
+    environment:
+      - PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+    image: portainer/portainer-ee:latest
+    ports:
+      - 9443:9443
+      - 8000:8000
+    restart: always
+    volumes:
+      - ${APPDATA}/_data:/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    network_mode: bridge
+    privileged: false
