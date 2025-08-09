@@ -3,7 +3,7 @@ services:
     container_name: npmplus
     image: docker.io/zoeyvid/npmplus:latest
     restart: always
-    network_mode: bridge
+    network_mode: nginx
     ports:
       - 80:80
       - 81:81
@@ -15,3 +15,7 @@ services:
       - ACME_EMAIL=${ACME_EMAIL}
       - INITIAL_ADMIN_EMAIL=${ACME_EMAIL}
       - INITIAL_ADMIN_PASSWORD=${ADMIN_PASSWORD}
+
+networks:
+  nginx:
+    driver: bridge
