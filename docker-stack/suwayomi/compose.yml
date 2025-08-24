@@ -9,6 +9,7 @@ services:
       - TZ=${TZ}
     hostname: suwayomi
     image: ghcr.io/suwayomi/suwayomi-server:preview
+    network_mode: nginx
     ports:
       - 4567:4567
     restart: always
@@ -22,35 +23,41 @@ services:
       - TZ=${TZ}
     hostname: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
+    network_mode: nginx
     ports:
       - 8191:8191
     restart: unless-stopped
 
-  # manga-image-translator:
-  #   build:
-  #     context: ${APPDATA}/manga-image-translator
-  #   container_name: manga-image-translator
-  #   command: batch-script.py
-  #   volumes:
-  #     - ${APPDATA}/manga-image-translator/result:/app/result
-  #     - ${APPDATA}/manga-image-translator/detection:/app/detection
-  #     - ${APPDATA}/manga-image-translator/fonts:/app/fonts
-  #     - ${APPDATA}/manga-image-translator/inpainting:/app/inpainting
-  #     - ${APPDATA}/manga-image-translator/ocr:/app/ocr
-  #     - ${APPDATA}/manga-image-translator/text_mask:/app/text_mask
-  #     - ${APPDATA}/manga-image-translator/text_rendering:/app/text_rendering
-  #     - ${APPDATA}/manga-image-translator/translators:/app/translators
-  #     - ${APPDATA}/manga-image-translator/textblockdetector:/app/textblockdetector
-  #     - ${APPDATA}/manga-image-translator/textline_merge:/app/textline_merge
-  #     - ${APPDATA}/manga-image-translator/translate_demo.py:/app/translate_demo.py
-  #     - ${APPDATA}/manga-image-translator/web_main.py:/app/web_main.py
-  #     - ${APPDATA}/manga-image-translator/ui.html:/app/ui.html
-  #     - ${MANGA_FOLDER}:/app/data
-  #     - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
-  #   ipc: host
-  #   # For GPU
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - capabilities: [gpu]
+  manga-image-translator:
+    build:
+      context: ${APPDATA}/manga-image-translator
+    container_name: manga-image-translator
+    command: batch-script.py
+    network_mode: nginx
+    volumes:
+      - ${APPDATA}/manga-image-translator/result:/app/result
+      - ${APPDATA}/manga-image-translator/detection:/app/detection
+      - ${APPDATA}/manga-image-translator/fonts:/app/fonts
+      - ${APPDATA}/manga-image-translator/inpainting:/app/inpainting
+      - ${APPDATA}/manga-image-translator/ocr:/app/ocr
+      - ${APPDATA}/manga-image-translator/text_mask:/app/text_mask
+      - ${APPDATA}/manga-image-translator/text_rendering:/app/text_rendering
+      - ${APPDATA}/manga-image-translator/translators:/app/translators
+      - ${APPDATA}/manga-image-translator/textblockdetector:/app/textblockdetector
+      - ${APPDATA}/manga-image-translator/textline_merge:/app/textline_merge
+      - ${APPDATA}/manga-image-translator/translate_demo.py:/app/translate_demo.py
+      - ${APPDATA}/manga-image-translator/web_main.py:/app/web_main.py
+      - ${APPDATA}/manga-image-translator/ui.html:/app/ui.html
+      - ${MANGA_FOLDER}:/app/data
+      - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
+    ipc: host
+    # For GPU
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - capabilities: [gpu]
+
+networks:
+  nginx:
+    driver: bridge
