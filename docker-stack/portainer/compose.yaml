@@ -11,5 +11,10 @@ services:
     volumes:
       - ${APPDATA}/_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
-    network_mode: bridge
+    network_mode: nginx
     privileged: false
+
+networks:
+  nginx:
+    driver: bridge
+
