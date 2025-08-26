@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   xinference: &xinference
-    image: xprobe/xinference:latest
+    image: xprobe/xinference:latest-cu128
     deploy:
       resources:
         reservations:
@@ -11,12 +11,12 @@ services:
               driver: nvidia
               count: all
     volumes:
-      - ${APPDATA}/data/:/data
+      - ${APPDATA}/data/:/root/.xinference
+      - modelscope-cache:/root/.cache/modelscope
     environment:
-      - XINFERENCE_HOME=/data
-      # - HUGGING_FACE_HUB_TOKEN=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
-      # - HF_ENDPOINT=https://hf-mirror.com
-      # - XINFERENCE_MODEL_SRC=modelscope
+      - PUID=0
+      - PGID=0
+      - XINFERENCE_MODEL_SRC=modelscope
 
   xinference-supervisor:
     <<: *xinference
@@ -81,3 +81,6 @@ services:
     depends_on:
       xinference-supervisor:
         condition: service_healthy
+
+volumes:
+  modelscope-cache:
