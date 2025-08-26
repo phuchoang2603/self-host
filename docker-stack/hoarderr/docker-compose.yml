@@ -6,7 +6,6 @@ services:
       - ${APPDATA}/data:/data
     ports:
       - 3001:3000
-    network_mode: bridge
     env_file:
       - .env
     environment:
@@ -17,7 +16,6 @@ services:
   chrome:
     image: gcr.io/zenika-hub/alpine-chrome:123
     restart: unless-stopped
-    network_mode: bridge
     command:
       - --no-sandbox
       - --disable-gpu
@@ -31,7 +29,6 @@ services:
     restart: unless-stopped
     env_file:
       - .env
-    network_mode: bridge
     environment:
       MEILI_NO_ANALYTICS: "true"
     volumes:
