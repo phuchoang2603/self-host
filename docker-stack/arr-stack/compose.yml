@@ -153,14 +153,6 @@ services:
       - ${APPDATA}/jellyfin/config:/config
       - ${MEDIA_FOLDER}:/data
       - jellyfin_cache:/cache
-    # runtime: nvidia
-    # deploy:
-    #   resources:
-    #     reservations:
-    #       devices:
-    #         - driver: nvidia
-    #           count: all
-    #           capabilities: [gpu]
 
 volumes:
   transcode_cache:
