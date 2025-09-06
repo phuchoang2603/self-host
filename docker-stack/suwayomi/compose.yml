@@ -35,21 +35,9 @@ services:
     command: batch-script.py
     network_mode: nginx
     volumes:
-      - ${APPDATA}/manga-image-translator/result:/app/result
-      - ${APPDATA}/manga-image-translator/detection:/app/detection
-      - ${APPDATA}/manga-image-translator/fonts:/app/fonts
-      - ${APPDATA}/manga-image-translator/inpainting:/app/inpainting
-      - ${APPDATA}/manga-image-translator/ocr:/app/ocr
-      - ${APPDATA}/manga-image-translator/text_mask:/app/text_mask
-      - ${APPDATA}/manga-image-translator/text_rendering:/app/text_rendering
-      - ${APPDATA}/manga-image-translator/translators:/app/translators
-      - ${APPDATA}/manga-image-translator/textblockdetector:/app/textblockdetector
-      - ${APPDATA}/manga-image-translator/textline_merge:/app/textline_merge
-      - ${APPDATA}/manga-image-translator/translate_demo.py:/app/translate_demo.py
-      - ${APPDATA}/manga-image-translator/web_main.py:/app/web_main.py
-      - ${APPDATA}/manga-image-translator/ui.html:/app/ui.html
-      - ${MANGA_FOLDER}:/app/data
+      - ${APPDATA}/manga-image-translator/:/app/
       - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
+      - ${MANGA_FOLDER}:/app/data
     ipc: host
     # For GPU
     deploy:
