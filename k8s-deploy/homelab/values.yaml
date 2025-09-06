@@ -1,0 +1,19 @@
+# Helm charts
+applications:
+  karakeep: # also use this for chartName
+    enabled: false
+    destinationNamespace: karakeep
+    chartURL: "https://karakeep-app.github.io/helm-charts"
+    chartTargetRevision: "v0.26.0"
+    valuesURL: "https://github.com/phuchoang2603/self-host.git"
+    valuesTargetRevision: "main"
+    valuesFile: k8s-deploy/homelab/values/karakeep.yaml
+
+# Manual deployments file
+deployments:
+  karakeep:
+    enabled: false
+    repoURL: "https://github.com/phuchoang2603/self-host.git"
+    targetRevision: "main"
+    path: k8s-deploy/fraud-detection/values/cloud
+    destinationNamespace: default

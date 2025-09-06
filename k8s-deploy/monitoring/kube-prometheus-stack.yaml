@@ -1,0 +1,44 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+  name: kube-prometheus-stack
+  namespace: argo-cd
+spec:
+  destination:
+    namespace: monitoring
+    server: https://kubernetes.default.svc
+  project: default
+  sources:
+    - repoURL: https://prometheus-community.github.io/helm-charts
+      chart: kube-prometheus-stack
+      targetRevision: 72.6.2
+      helm:
+        valueFiles:
+          - $values/monitoring/values-local.yaml # Relative path from repo root
+    - repoURL: https://github.com/phuchoang2603/k8s-deploy.git
+      targetRevision: master
+      ref: values # Reference for $values above
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - ServerSideApply=true
+      - CreateNamespace=true
+---
+apiVersion: traefik.io/v1alpha1
+kind: IngressRoute
+metadata:
+  name: grafana-ingress
+  namespace: monitoring
+spec:
+  entryPoints:
+    - websecure
+  routes:
+    - match: Host(`grafana.home.phuchoang.sbs`)
+      kind: Rule
+      services:
+        - name: kube-prometheus-stack-grafana
+          port: 80
