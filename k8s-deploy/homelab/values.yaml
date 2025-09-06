@@ -1,7 +1,7 @@
 # Helm charts
 applications:
   karakeep: # also use this for chartName
-    enabled: false
+    enabled: true
     destinationNamespace: karakeep
     chartURL: "https://karakeep-app.github.io/helm-charts"
     chartTargetRevision: "v0.26.0"
