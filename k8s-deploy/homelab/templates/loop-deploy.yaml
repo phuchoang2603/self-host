@@ -17,9 +17,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: {{ $appConfig.destinationNamespace | quote }}
   source:
-    repoURL: {{ $appconfig.repoURL | quote }}
-    path: {{ $appconfig.path | quote }}
-    targetRevision: {{  $appconfig.targetRevision | quote }}
+    repoURL: {{ $appConfig.repoURL | quote }}
+    path: {{ $appConfig.path | quote }}
+    targetRevision: {{  $appConfig.targetRevision | quote }}
   syncPolicy:
     automated:
       prune: true
