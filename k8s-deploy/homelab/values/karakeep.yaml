@@ -121,13 +121,13 @@ secrets:
     enabled: true
     stringData:
       NEXTAUTH_SECRET: "{{ default (randAlphaNum 48) .Values.applicationSecretKey }}"
-      OPENAI_API_KEY: 1234
-      OPENAI_BASE_URL: http://10.69.1.101:9997/v1
-      INFERENCE_TEXT_MODEL: gemma-3-it
-      INFERENCE_IMAGE_MODEL: gemma-3-it
-      EMBEDDING_TEXT_MODEL: Qwen3-Embedding-0.6B
-      INFERENCE_CONTEXT_LENGTH: 4096
-      INFERENCE_JOB_TIMEOUT_SEC: 3600
+      OPENAI_API_KEY: "1234"
+      OPENAI_BASE_URL: "http://10.69.1.101:9997/v1"
+      INFERENCE_TEXT_MODEL: "gemma-3-it"
+      INFERENCE_IMAGE_MODEL: "gemma-3-it"
+      EMBEDDING_TEXT_MODEL: "Qwen3-Embedding-0.6B"
+      INFERENCE_CONTEXT_LENGTH: "4096"
+      INFERENCE_JOB_TIMEOUT_SEC: "3600"
   meilesearch:
     enabled: true
     stringData:
