@@ -63,7 +63,7 @@ controllers:
       chrome:
         image:
           repository: gcr.io/zenika-hub/alpine-chrome
-          tag: 124
+          tag: 123
 
         args:
           - --remote-debugging-address=0.0.0.0
@@ -155,10 +155,14 @@ persistence:
             readonly: false
 
 meilisearch:
+  image:
+    repository: getmeili/meilisearch
+    tag: v1.11.1
   auth:
     existingMasterKeySecret: "{{ .Release.Name }}-meilesearch"
   environment:
     MEILI_ENV: production
+    MEILI_NO_ANALYTICS: "true"
   persistence:
     enabled: true
     size: 1Gi
