@@ -18,7 +18,7 @@ controllers:
       karakeep:
         image:
           repository: ghcr.io/karakeep-app/karakeep
-          tag: "{{ .Chart.AppVersion }}"
+          tag: "0.27.0"
 
         env:
           NEXTAUTH_URL: "{{ .Values.applicationProtocol }}://{{ .Values.applicationHost }}"
