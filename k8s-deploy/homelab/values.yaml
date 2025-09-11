@@ -8,7 +8,7 @@ applications:
     valuesURL: "https://github.com/phuchoang2603/self-host.git"
     valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/karakeep.yaml
-    nfs-pv:
+    nfsPV:
       data:
         size: "2Gi"
         policy: "Retain" # Options: Retain, Recycle, Delete

@@ -42,9 +42,9 @@ spec:
       - ServerSideApply=true
 ---
 {{- /* Check if any PersistentVolumes are defined for this application */}}
-{{- if $appConfig.nfs-pv }}
+{{- if $appConfig.nfsPV }}
   {{- /* Loop through each PersistentVolume and create it */}}
-  {{- range $pvName, $pvConfig := $appConfig.nfs-pv }}
+  {{- range $pvName, $pvConfig := $appConfig.nfsPV }}
 # --- PersistentVolume for {{ $appName }}: {{ $pvName }} ---
 apiVersion: v1
 kind: PersistentVolume
@@ -62,6 +62,6 @@ spec:
     readOnly: false
 ---
   {{- end }}{{/* End of pvConfig loop */}}
-{{- end }}{{/* End of if nfs-pv */}}
+{{- end }}{{/* End of if nfsPV */}}
 {{- end }}{{/* End of if enabled */}}
 {{- end }}{{/* End of appConfig loop */}}

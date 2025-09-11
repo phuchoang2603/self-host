@@ -54,7 +54,7 @@ controllers:
         - name: data
           accessMode: ReadWriteOnce
           size: 2Gi
-          storageClass: ""
+          storageClass: "-"
           globalMounts:
             - path: /data
 
@@ -162,4 +162,4 @@ meilisearch:
   persistence:
     enabled: true
     size: 1Gi
-    storageClass: ""
+    storageClass: "-"
