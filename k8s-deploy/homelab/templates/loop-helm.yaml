@@ -4,6 +4,7 @@
 */}}
 {{- range $appName, $appConfig := .Values.applications }}
 {{- if $appConfig.enabled }}
+# --- ArgoCD Application for {{ $appName }} ---
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -40,5 +41,27 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
 ---
-{{- end }}
-{{- end }}
+{{- /* Check if any PersistentVolumes are defined for this application */}}
+{{- if $appConfig.nfs-pv }}
+  {{- /* Loop through each PersistentVolume and create it */}}
+  {{- range $pvName, $pvConfig := $appConfig.nfs-pv }}
+# --- PersistentVolume for {{ $appName }}: {{ $pvName }} ---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: {{ printf "%s-%s" $appName $pvName }}
+spec:
+  capacity:
+    storage: {{ $pvConfig.size | quote }}
+  accessModes:
+    - {{ default "ReadWriteOnce" $pvConfig.accessMode | quote }}
+  persistentVolumeReclaimPolicy: {{ default "Retain" $pvConfig.policy | quote }}
+  nfs:
+    path: {{ $pvConfig.path | quote }}
+    server: {{ $pvConfig.host | quote }}
+    readOnly: false
+---
+  {{- end }}{{/* End of pvConfig loop */}}
+{{- end }}{{/* End of if nfs-pv */}}
+{{- end }}{{/* End of if enabled */}}
+{{- end }}{{/* End of appConfig loop */}}

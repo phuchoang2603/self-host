@@ -8,6 +8,19 @@ applications:
     valuesURL: "https://github.com/phuchoang2603/self-host.git"
     valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/karakeep.yaml
+    nfs-pv:
+      data:
+        size: "2Gi"
+        policy: "Retain" # Options: Retain, Recycle, Delete
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/" # <-- Your NFS path
+        host: "10.69.1.102" # <-- Your NFS server IP
+      meilisearch:
+        size: "1Gi"
+        policy: "Retain"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/"
+        host: "10.69.1.102"
 
 # Manual deployments file
 deployments:
