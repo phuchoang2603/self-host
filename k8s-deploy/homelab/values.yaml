@@ -14,14 +14,14 @@ applications:
         policy: "Retain" # Options: Retain, Recycle, Delete
         storageClassName: "karakeep"
         accessMode: "ReadWriteOnce"
-        path: "/mnt/storage/appdata/" # <-- Your NFS path
+        path: "/mnt/storage/appdata/hoarderr/data" # <-- Your NFS path
         host: "10.69.1.102" # <-- Your NFS server IP
       meilisearch:
         size: "1Gi"
         policy: "Retain"
         storageClassName: "karakeep"
         accessMode: "ReadWriteOnce"
-        path: "/mnt/storage/appdata/"
+        path: "/mnt/storage/appdata/hoarderr/meilisearch"
         host: "10.69.1.102"
 
 # Manual deployments file
