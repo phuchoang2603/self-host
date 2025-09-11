@@ -51,6 +51,7 @@ kind: PersistentVolume
 metadata:
   name: {{ printf "%s-%s" $appName $pvName }}
 spec:
+  storageClassName: {{ $pvConfig.storageClassName | quote }}
   capacity:
     storage: {{ $pvConfig.size | quote }}
   accessModes:

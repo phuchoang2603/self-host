@@ -12,12 +12,14 @@ applications:
       data:
         size: "2Gi"
         policy: "Retain" # Options: Retain, Recycle, Delete
+        storageClassName: "karakeep"
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/" # <-- Your NFS path
         host: "10.69.1.102" # <-- Your NFS server IP
       meilisearch:
         size: "1Gi"
         policy: "Retain"
+        storageClassName: "karakeep"
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/"
         host: "10.69.1.102"
