@@ -1,6 +1,6 @@
 services:
   web:
-    image: ghcr.io/hoarder-app/hoarder:${HOARDER_VERSION:-release}
+    image: ghcr.io/karakeep-app/karakeep:${HOARDER_VERSION:-release}
     restart: unless-stopped
     volumes:
       - ${APPDATA}/data:/data
@@ -9,6 +9,8 @@ services:
     env_file:
       - .env
     environment:
+      PUID: 1000
+      PGID: 1000
       MEILI_ADDR: http://meilisearch:7700
       BROWSER_WEB_URL: http://chrome:9222
       DATA_DIR: /data
@@ -30,6 +32,8 @@ services:
     env_file:
       - .env
     environment:
+      PUID: 1000
+      PGID: 1000
       MEILI_NO_ANALYTICS: "true"
     volumes:
       - ${APPDATA}/meilisearch:/meili_data

@@ -11,6 +11,8 @@ services:
     volumes:
       - ${APPDATA}/data:/data
     environment:
+      - PUID=1000
+      - PGID=1000
       - TZ=${TZ}
       - ACME_EMAIL=${ACME_EMAIL}
       - INITIAL_ADMIN_EMAIL=${ACME_EMAIL}
