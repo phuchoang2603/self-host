@@ -9,27 +9,7 @@ services:
     network_mode: nginx
     ports:
       - "8080:8080"
-      # - "11470:11470" # Just one of the two should be enough
-      # - "12470:12470"
     restart: unless-stopped
-    volumes:
-      - ${APPDATA}/stremio-local:/root/.stremio-server
-
-  # stremio-remote:
-  #   container_name: stremio-remote
-  #   environment:
-  #     CERT_FILE: cert.pem
-  #     DOMAIN: stremio.vps.phuchoang.sbs
-  #     NO_CORS: "1"
-  #   image: tsaridas/stremio-docker:latest
-  #   network_mode: bridge
-  #   ports:
-  #     # - "8081:8080"
-  #     # - "11471:11470" # Just one of the two should be enough
-  #     - "12471:12470"
-  #   restart: unless-stopped
-  #   volumes:
-  #     - ${APPDATA}/stremio-remote:/root/.stremio-server
 
 networks:
   nginx:
