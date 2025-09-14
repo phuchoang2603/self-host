@@ -24,11 +24,29 @@ applications:
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
         host: "10.69.1.102"
 
+  stremio: # also use this for chartName
+    enabled: true
+    destinationNamespace: stremio
+    chartURL: "https://github.com/phuchoang2603/self-host.git"
+    chartTargetRevision: "main"
+    path: k8s-deploy/homelab/mychart
+    valuesURL: "https://github.com/phuchoang2603/self-host.git"
+    valuesTargetRevision: "main"
+    valuesFile: k8s-deploy/homelab/values/stremio.yaml
+    nfsPV:
+      stremio-server:
+        size: "3Gi"
+        policy: "Retain" # Options: Retain, Recycle, Delete
+        storageClassName: "stremio"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/stremio"
+        host: "10.69.1.102"
+
 # Manual deployments file
 deployments:
-  karakeep:
+  stremio:
     enabled: false
     repoURL: "https://github.com/phuchoang2603/self-host.git"
     targetRevision: "main"
-    path: k8s-deploy/fraud-detection/values/cloud
-    destinationNamespace: default
+    path: k8s-deploy/homelab/values/stremio
+    destinationNamespace: media
