@@ -51,6 +51,7 @@ apiVersion: v1
 kind: PersistentVolume
 metadata:
   name: {{ printf "%s-%s" $appName $pvName }}
+  namespace: {{ $appConfig.destinationNamespace | quote }}
 spec:
   storageClassName: {{ $pvConfig.storageClassName | quote }}
   capacity:
