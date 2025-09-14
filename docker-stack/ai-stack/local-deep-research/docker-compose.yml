@@ -1,0 +1,61 @@
+services:
+  local-deep-research:
+    image: localdeepresearch/local-deep-research
+    networks:
+      - ldr-network
+    ports:
+      - "5000:5000"
+    environment:
+      # Web Interface Settings
+      - LDR_WEB_PORT=5000
+      - LDR_WEB_HOST=0.0.0.0
+      - LDR_LLM_PROVIDER=ollama
+      - LDR_LLM_OLLAMA_URL=http://ollama:11434
+      - LDR_SEARCH_TOOL=arxiv
+      - LDR_SEARCH_ENGINE_WEB_SEARXNG_DEFAULT_PARAMS_INSTANCE_URL=http://searxng:8080
+      # Data directory configuration
+      - LDR_DATA_DIR=/data
+    volumes:
+      - ${APPDATA}/ldr_data:/data
+      - ${APPDATA}/ldr_scripts:/scripts
+    restart: unless-stopped
+
+  ollama:
+    image: ollama/ollama:latest
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    container_name: ollama_service
+    entrypoint: "/scripts/ollama_entrypoint.sh ${MODEL:-gemma3:12b}"
+    healthcheck:
+      test: ["CMD", "ollama", "show", "${MODEL:-gemma3:12b}"]
+      interval: 10s
+      timeout: 5s
+      start_period: 10m
+      retries: 2
+    environment:
+      OLLAMA_KEEP_ALIVE: -1
+      OLLAMA_FLASH_ATTENTION: 1
+      OLLAMA_KV_CACHE_TYPE: q4_0
+    volumes:
+      - ${APPDATA}/ollama:/root/.ollama
+      - ${APPDATA}/ldr_scripts:/scripts
+    networks:
+      - ldr-network
+    restart: unless-stopped
+
+  searxng:
+    image: searxng/searxng:latest
+    container_name: searxng
+    networks:
+      - ldr-network
+    volumes:
+      - ${APPDATA}/searxng_data:/etc/searxng
+    restart: unless-stopped
+
+networks:
+  ldr-network:
