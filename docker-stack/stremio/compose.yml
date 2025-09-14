@@ -3,15 +3,14 @@ services:
   stremio-local:
     container_name: stremio-local
     environment:
-      CERT_FILE: cert.pem
-      DOMAIN: stremio.home.phuchoang.sbs
-      NO_CORS: "1"
+      NO_CORS: 1
+      AUTO_SERVER_URL: 1
     image: tsaridas/stremio-docker:latest
     network_mode: nginx
     ports:
-      # - "8080:8080"
+      - "8080:8080"
       # - "11470:11470" # Just one of the two should be enough
-      - "12470:12470"
+      # - "12470:12470"
     restart: unless-stopped
     volumes:
       - ${APPDATA}/stremio-local:/root/.stremio-server
