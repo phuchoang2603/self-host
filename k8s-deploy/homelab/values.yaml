@@ -29,7 +29,7 @@ applications:
     destinationNamespace: stremio
     chartURL: "https://github.com/phuchoang2603/self-host.git"
     chartTargetRevision: "main"
-    path: k8s-deploy/homelab/mychart
+    path: k8s-deploy/homelab/my-chart
     valuesURL: "https://github.com/phuchoang2603/self-host.git"
     valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/stremio.yaml
