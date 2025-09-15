@@ -39,7 +39,7 @@ persistence:
     - name: appdata
       storageClassName: "suwayomi"
       accessMode: ReadWriteOnce
-      size: 1Gi
+      size: 100M
 
   volumeMounts:
     - name: manga

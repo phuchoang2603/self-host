@@ -59,7 +59,7 @@ applications:
         path: "/mnt/storage/media/Manga"
         host: "10.69.1.102"
       appdata:
-        size: "1Gi"
+        size: "100M"
         policy: "Retain"
         storageClassName: "suwayomi"
         accessMode: "ReadWriteOnce"
@@ -83,11 +83,42 @@ applications:
         path: "/mnt/storage/media/Books/Books"
         host: "10.69.1.102"
       config:
-        size: "1Gi"
+        size: "100M"
         policy: "Retain"
         storageClassName: "calibre"
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/books/calibre-web/config"
+        host: "10.69.1.102"
+  audiobookshelf:
+    enabled: true
+    destinationNamespace: books
+    chartURL: "https://github.com/phuchoang2603/self-host.git"
+    chartTargetRevision: "main"
+    path: k8s-deploy/homelab/my-chart
+    valuesURL: "https://github.com/phuchoang2603/self-host.git"
+    valuesTargetRevision: "main"
+    valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
+    nfsPV:
+      books:
+        size: "10Gi"
+        policy: "Retain"
+        storageClassName: "audiobookshelf"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/media/Books"
+        host: "10.69.1.102"
+      config:
+        size: "100M"
+        policy: "Retain"
+        storageClassName: "audiobookshelf"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/books/audiobookshelf/config"
+        host: "10.69.1.102"
+      metadata:
+        size: "100M"
+        policy: "Retain"
+        storageClassName: "audiobookshelf"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
         host: "10.69.1.102"
 # Manual deployments file
 deployments:

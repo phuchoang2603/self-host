@@ -5,7 +5,7 @@
 replicaCount: 1
 
 image:
-  repository: crocodilestick/calibre-web-automated
+  repository: ghcr.io/advplyr/audiobookshelf
   pullPolicy: IfNotPresent
   tag: "latest"
 
@@ -19,25 +19,29 @@ env:
 
 service:
   type: ClusterIP
-  port: 8083
-  targetPort: 8083
+  port: 13378
+  targetPort: 80
 
 ingress:
   enabled: true
   scheme: http
   insecureSkipVerify: false
-  host: calibre.prod.phuchoang.sbs
+  host: adb.prod.phuchoang.sbs
   entryPoints:
     - websecure
 
 persistence:
   claims:
     - name: books
-      storageClassName: "calibre"
+      storageClassName: "audiobookshelf"
       accessMode: ReadWriteOnce
       size: 10Gi
     - name: config
-      storageClassName: "calibre"
+      storageClassName: "audiobookshelf"
+      accessMode: ReadWriteOnce
+      size: 100M
+    - name: metadata
+      storageClassName: "audiobookshelf"
       accessMode: ReadWriteOnce
       size: 100M
 
@@ -46,3 +50,5 @@ persistence:
       mountPath: /calibre-library
     - name: config
       mountPath: /config
+    - name: metadata
+      mountPath: /metadata
