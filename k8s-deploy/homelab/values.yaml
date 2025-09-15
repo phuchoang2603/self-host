@@ -43,6 +43,31 @@ applications:
         path: "/mnt/storage/appdata/stremio"
         host: "10.69.1.102"
 
+  suwayomi:
+    enabled: true
+    destinationNamespace: suwayomi
+    chartURL: "https://github.com/phuchoang2603/self-host.git"
+    chartTargetRevision: "main"
+    path: k8s-deploy/homelab/my-chart
+    valuesURL: "https://github.com/phuchoang2603/self-host.git"
+    valuesTargetRevision: "main"
+    valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
+    nfsPV:
+      manga:
+        size: "10Gi"
+        policy: "Retain"
+        storageClassName: "suwayomi"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/media/Manga"
+        host: "10.69.1.102"
+      appdata:
+        size: "1Gi"
+        policy: "Retain"
+        storageClassName: "suwayomi"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/suwayomi/data"
+        host: "10.69.1.102"
+
 # Manual deployments file
 deployments:
   stremio:
