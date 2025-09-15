@@ -12,18 +12,21 @@ image:
 env:
   - name: NO_CORS
     value: "1"
-  - name: AUTO_SERVER_URL
+  - name: CASTING_DISABLED
     value: "1"
+  - name: SERVER_URL
+    value: "https://stremio.prod.phuchoang.sbs"
+  - name: WEBUI_LOCATION
+    value: "https://stremio.prod.phuchoang.sbs"
   - name: CERT_FILE
-    value: combined.pem
+    value: "combined.pem"
   - name: DOMAIN
-    value: stremio.prod.phuchoang.sbs
+    value: "stremio.prod.phuchoang.sbs"
 
 service:
-  type: LoadBalancer
-  loadBalancerIP: 10.69.2.3
-  port: 12470
-  targetPort: 12470
+  type: ClusterIP
+  port: 8080
+  targetPort: 8080
 
 ingress:
   enabled: true
