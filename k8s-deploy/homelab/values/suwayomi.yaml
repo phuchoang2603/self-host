@@ -26,7 +26,7 @@ ingress:
   enabled: true
   scheme: http
   insecureSkipVerify: false
-  host: stremio.prod.phuchoang.sbs
+  host: suwayomi.prod.phuchoang.sbs
   entryPoints:
     - websecure
 
