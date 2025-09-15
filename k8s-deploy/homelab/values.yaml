@@ -7,7 +7,7 @@ global:
 applications:
   karakeep:
     enabled: true
-    destinationNamespace: karakeep
+    destinationNamespace: reading
     # This chart is from a different repo, so we override the global gitRepoURL
     chartURL: "https://karakeep-app.github.io/helm-charts"
     chartName: karakeep
@@ -24,20 +24,9 @@ applications:
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
         storageClassName: "karakeep"
 
-  stremio:
-    enabled: true
-    destinationNamespace: stremio
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/stremio.yaml
-    nfsPV:
-      stremio-server:
-        size: "3Gi"
-        path: "/mnt/storage/appdata/stremio"
-        storageClassName: "stremio"
-
   suwayomi:
     enabled: true
-    destinationNamespace: suwayomi
+    destinationNamespace: reading
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
     nfsPV:
@@ -52,7 +41,7 @@ applications:
 
   calibre:
     enabled: true
-    destinationNamespace: books
+    destinationNamespace: reading
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/calibre.yaml
     nfsPV:
@@ -67,7 +56,7 @@ applications:
 
   audiobookshelf:
     enabled: true
-    destinationNamespace: books
+    destinationNamespace: reading
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
     nfsPV:
@@ -83,6 +72,17 @@ applications:
         size: "102M"
         path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
         storageClassName: "audiobookshelf"
+
+  stremio:
+    enabled: true
+    destinationNamespace: watching
+    path: k8s-deploy/homelab/my-chart
+    valuesFile: k8s-deploy/homelab/values/stremio.yaml
+    nfsPV:
+      stremio-server:
+        size: "3Gi"
+        path: "/mnt/storage/appdata/stremio"
+        storageClassName: "stremio"
 
 # Manual deployments file
 deployments:

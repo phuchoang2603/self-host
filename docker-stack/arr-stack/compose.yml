@@ -42,6 +42,8 @@ services:
       - media
     environment:
       - TZ=${TZ}
+    ports:
+      - 8191:8191
     restart: unless-stopped
 
   syncify:
