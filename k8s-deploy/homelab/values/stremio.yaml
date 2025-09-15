@@ -9,15 +9,15 @@ image:
   pullPolicy: IfNotPresent
   tag: "latest"
 
-# Environment variables to pass to the container
-# env:
-#   - name: MY_ENV_VAR
-#     value: "my-value"
 env:
   - name: NO_CORS
     value: "1"
   - name: AUTO_SERVER_URL
     value: "1"
+  - name: CERT_FILE
+    value: combined.pem
+  - name: DOMAIN
+    value: stremio.prod.phuchoang.sbs
 
 service:
   type: ClusterIP
