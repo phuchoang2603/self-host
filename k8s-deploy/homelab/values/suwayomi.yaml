@@ -11,12 +11,9 @@ image:
 
 env:
   - name: EXTENSION_REPOS
-    value:
-      [
-        "https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json",
-      ]
+    value: '["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"]'
   - name: FLARESOLVERR_ENABLED
-    value: false
+    value: "false"
   - name: TZ
     value: "America/New_York"
 
