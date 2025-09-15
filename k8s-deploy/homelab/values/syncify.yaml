@@ -23,8 +23,8 @@ env:
 
 service:
   type: ClusterIP
-  port: 8083
-  targetPort: 8083
+  port: 5000
+  targetPort: 5000
 
 ingress:
   enabled: true
