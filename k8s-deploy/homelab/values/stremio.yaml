@@ -20,7 +20,7 @@ env:
     value: stremio.prod.phuchoang.sbs
 
 service:
-  type: ClusterIP
+  type: LoadBalancer
   port: 12470
   targetPort: 12470
 
