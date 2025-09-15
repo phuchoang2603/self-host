@@ -84,6 +84,27 @@ applications:
         path: "/mnt/storage/appdata/stremio"
         storageClassName: "stremio"
 
+  servarr:
+    enabled: true
+    destinationNamespace: watching
+    chartURL: "https://charts.kubito.dev"
+    chartName: servarr
+    chartTargetRevision: "v1.1.7"
+    valuesFile: k8s-deploy/homelab/values/servarr.yaml
+    nfsPV:
+      media:
+        size: "200Gi"
+        path: "/mnt/storage/media"
+        storageClassName: "media"
+      jellyfin-config:
+        size: "1Gi"
+        path: "/mnt/storage/appdata/arr-stack/jellyfin/config"
+        storageClassName: "jellyfin"
+      prowlarr-config:
+        size: "800Mi"
+        path: "/mnt/storage/appdata/arr-stack/prowlarr/config"
+        storageClassName: "prowlarr"
+
 # Manual deployments file
 deployments:
   others:
