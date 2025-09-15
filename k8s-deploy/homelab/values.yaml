@@ -107,14 +107,14 @@ applications:
         path: "/mnt/storage/media/Books"
         host: "10.69.1.102"
       config:
-        size: "100M"
+        size: "101M"
         policy: "Retain"
         storageClassName: "audiobookshelf"
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/books/audiobookshelf/config"
         host: "10.69.1.102"
       metadata:
-        size: "100M"
+        size: "102M"
         policy: "Retain"
         storageClassName: "audiobookshelf"
         accessMode: "ReadWriteOnce"

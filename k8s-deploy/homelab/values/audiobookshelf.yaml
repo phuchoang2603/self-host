@@ -39,15 +39,15 @@ persistence:
     - name: config
       storageClassName: "audiobookshelf"
       accessMode: ReadWriteOnce
-      size: 100M
+      size: 101M
     - name: metadata
       storageClassName: "audiobookshelf"
       accessMode: ReadWriteOnce
-      size: 100M
+      size: 102M
 
   volumeMounts:
     - name: books
-      mountPath: /calibre-library
+      mountPath: /data
     - name: config
       mountPath: /config
     - name: metadata
