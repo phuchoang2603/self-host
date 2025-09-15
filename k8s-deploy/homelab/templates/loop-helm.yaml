@@ -19,7 +19,7 @@ spec:
     namespace: {{ $appConfig.destinationNamespace | quote }}
   sources:
     # Main source for the Helm Chart
-    - chart: {{ $appName | quote }}
+    - chart: {{ $appConfig.chartName | quote }}
       repoURL: {{ $appConfig.chartURL | quote }}
       path: {{ $appConfig.path | quote }}
       targetRevision: {{ $appConfig.chartTargetRevision | quote }}

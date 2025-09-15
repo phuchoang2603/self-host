@@ -1,8 +1,9 @@
 # Helm charts
 applications:
-  karakeep: # also use this for chartName
+  karakeep:
     enabled: true
     destinationNamespace: karakeep
+    chartName: karakeep
     chartURL: "https://karakeep-app.github.io/helm-charts"
     chartTargetRevision: "v0.26.0"
     valuesURL: "https://github.com/phuchoang2603/self-host.git"
@@ -11,11 +12,11 @@ applications:
     nfsPV:
       data:
         size: "2Gi"
-        policy: "Retain" # Options: Retain, Recycle, Delete
+        policy: "Retain"
         storageClassName: "karakeep"
         accessMode: "ReadWriteOnce"
-        path: "/mnt/storage/appdata/hoarderr/data" # <-- Your NFS path
-        host: "10.69.1.102" # <-- Your NFS server IP
+        path: "/mnt/storage/appdata/hoarderr/data"
+        host: "10.69.1.102"
       meilisearch:
         size: "1Gi"
         policy: "Retain"
@@ -24,7 +25,7 @@ applications:
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
         host: "10.69.1.102"
 
-  stremio: # also use this for chartName
+  stremio:
     enabled: true
     destinationNamespace: stremio
     chartURL: "https://github.com/phuchoang2603/self-host.git"
@@ -36,7 +37,7 @@ applications:
     nfsPV:
       stremio-server:
         size: "3Gi"
-        policy: "Retain" # Options: Retain, Recycle, Delete
+        policy: "Retain"
         storageClassName: "stremio"
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/stremio"
