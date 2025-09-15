@@ -23,17 +23,12 @@ spec:
       repoURL: {{ $appConfig.chartURL | quote }}
       path: {{ $appConfig.path | quote }}
       targetRevision: {{ $appConfig.chartTargetRevision | quote }}
-      {{- if $appConfig.valuesFile }}
       helm:
         valueFiles:
           - $values/{{ $appConfig.valuesFile }}
-      {{- end }}
-
-    {{- if $appConfig.valuesFile }}
     - repoURL: {{ $appConfig.valuesURL | quote }}
       targetRevision: {{ $appConfig.valuesTargetRevision | quote }}
       ref: values
-    {{- end }}
   syncPolicy:
     automated:
       prune: true
