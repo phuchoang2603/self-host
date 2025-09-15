@@ -20,38 +20,6 @@ services:
       - 6881:6881/udp
     restart: "unless-stopped"
 
-  radarr:
-    container_name: radarr
-    image: lscr.io/linuxserver/radarr:latest
-    networks:
-      - media
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=${TZ}
-    ports:
-      - 7878:7878
-    volumes:
-      - ${APPDATA}/radarr/config:/config
-      - ${MEDIA_FOLDER}:/data
-    restart: "unless-stopped"
-
-  sonarr:
-    container_name: sonarr
-    image: linuxserver/sonarr:latest
-    networks:
-      - media
-    environment:
-      - PUID=0
-      - PGID=0
-      - TZ=${TZ}
-    volumes:
-      - ${APPDATA}/sonarr/config:/config
-      - ${MEDIA_FOLDER}:/data
-    ports:
-      - 8989:8989
-    restart: unless-stopped
-
   prowlarr:
     container_name: prowlarr
     image: linuxserver/prowlarr:latest
@@ -67,57 +35,14 @@ services:
       - 9696:9696
     restart: unless-stopped
 
-  # tdarr:
-  #   container_name: tdarr
-  #   image: ghcr.io/haveagitgat/tdarr:latest
-  #   restart: unless-stopped
-  #   networks:
-  #     - media
-  #   ports:
-  #     - 8265:8265 # webUI port
-  #     - 8266:8266 # server port
-  #   environment:
-  #     - TZ=${TZ}
-  #     - PUID=0
-  #     - PGID=0
-  #     - UMASK_SET=002
-  #     - serverIP=0.0.0.0
-  #     - serverPort=8266
-  #     - webUIPort=8265
-  #     - internalNode=true
-  #     - inContainer=true
-  #     - ffmpegVersion=6
-  #     - nodeName=MyInternalNode
-  #     - NVIDIA_DRIVER_CAPABILITIES=all
-  #     - NVIDIA_VISIBLE_DEVICES=all
-  #   volumes:
-  #     - ${APPDATA}/tdarr/server:/app/server
-  #     - ${APPDATA}/tdarr/configs:/app/configs
-  #     - ${APPDATA}/tdarr/logs:/app/logs
-  #     - ${MEDIA_FOLDER}:/media
-  #     - transcode_cache:/temp
-  #   devices:
-  #     - /dev/dri:/dev/dri
-  #   deploy:
-  #     resources:
-  #       reservations:
-  #         devices:
-  #           - driver: nvidia
-  #             count: all
-  #             capabilities: [gpu]
-
-  # recyclarr:
-  #   image: ghcr.io/recyclarr/recyclarr:latest
-  #   container_name: recyclarr
-  #   networks:
-  #     - media
-  #   environment:
-  #     - PUID=0
-  #     - PGID=0
-  #     - TZ=${TZ}
-  #   volumes:
-  #     - ${APPDATA}/recyclarr/config:/config
-  #   restart: unless-stopped
+  flaresolverr:
+    container_name: flaresolverr
+    image: ghcr.io/flaresolverr/flaresolverr:latest
+    networks:
+      - media
+    environment:
+      - TZ=${TZ}
+    restart: unless-stopped
 
   syncify:
     container_name: syncify
@@ -127,7 +52,6 @@ services:
     volumes:
       - ${APPDATA}/syncify/config:/syncify/config
       - ${MEDIA_FOLDER}/Music/:/syncify/downloads
-      - /etc/localtime:/etc/localtime:ro
     ports:
       - 5000:5000
     environment:
@@ -155,7 +79,6 @@ services:
       - jellyfin_cache:/cache
 
 volumes:
-  transcode_cache:
   jellyfin_cache:
 
 networks:
