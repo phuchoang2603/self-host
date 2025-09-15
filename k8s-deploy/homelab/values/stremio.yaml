@@ -30,6 +30,7 @@ service:
 
 ingress:
   enabled: true
+  scheme: https
   insecureSkipVerify: true
   host: stremio.prod.phuchoang.sbs
   entryPoints:
