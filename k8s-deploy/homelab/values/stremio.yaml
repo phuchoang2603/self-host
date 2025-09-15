@@ -12,12 +12,8 @@ image:
 env:
   - name: NO_CORS
     value: "1"
-  - name: CASTING_DISABLED
+  - name: AUTO_SERVER_URL
     value: "1"
-  - name: SERVER_URL
-    value: "https://stremio.prod.phuchoang.sbs"
-  - name: WEBUI_LOCATION
-    value: "https://stremio.prod.phuchoang.sbs"
   - name: CERT_FILE
     value: "combined.pem"
   - name: DOMAIN
