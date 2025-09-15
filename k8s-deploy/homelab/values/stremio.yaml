@@ -21,6 +21,7 @@ env:
 
 service:
   type: LoadBalancer
+  loadBalancerIP: 10.69.2.3
   port: 12470
   targetPort: 12470
 
