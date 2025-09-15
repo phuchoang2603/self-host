@@ -1615,7 +1615,7 @@ cleanuperr:
   replicaCount: 1
 
   image:
-    repository: ghcr.io/flmorg/cleanuperr
+    repository: ghcr.io/cleanuparr/cleanuparr
     pullPolicy: IfNotPresent
     tag: "latest"
 
