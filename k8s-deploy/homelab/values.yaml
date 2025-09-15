@@ -1,130 +1,92 @@
-# Helm charts
+global:
+  gitRepoURL: "https://github.com/phuchoang2603/self-host.git"
+  gitTargetRevision: "main"
+  nfs:
+    server: "10.69.1.102"
+
 applications:
   karakeep:
     enabled: true
     destinationNamespace: karakeep
-    chartName: karakeep
+    # This chart is from a different repo, so we override the global gitRepoURL
     chartURL: "https://karakeep-app.github.io/helm-charts"
+    chartName: karakeep
     chartTargetRevision: "v0.26.0"
-    valuesURL: "https://github.com/phuchoang2603/self-host.git"
-    valuesTargetRevision: "main"
+    # The values file still comes from our main git repo (inherited from global)
     valuesFile: k8s-deploy/homelab/values/karakeep.yaml
     nfsPV:
       data:
         size: "2Gi"
-        policy: "Retain"
-        storageClassName: "karakeep"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/hoarderr/data"
-        host: "10.69.1.102"
+        storageClassName: "karakeep"
       meilisearch:
         size: "1Gi"
-        policy: "Retain"
-        storageClassName: "karakeep"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
-        host: "10.69.1.102"
+        storageClassName: "karakeep"
+
   stremio:
     enabled: true
     destinationNamespace: stremio
-    chartURL: "https://github.com/phuchoang2603/self-host.git"
-    chartTargetRevision: "main"
     path: k8s-deploy/homelab/my-chart
-    valuesURL: "https://github.com/phuchoang2603/self-host.git"
-    valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/stremio.yaml
     nfsPV:
       stremio-server:
         size: "3Gi"
-        policy: "Retain"
-        storageClassName: "stremio"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/stremio"
-        host: "10.69.1.102"
+        storageClassName: "stremio"
+
   suwayomi:
     enabled: true
     destinationNamespace: suwayomi
-    chartURL: "https://github.com/phuchoang2603/self-host.git"
-    chartTargetRevision: "main"
     path: k8s-deploy/homelab/my-chart
-    valuesURL: "https://github.com/phuchoang2603/self-host.git"
-    valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
     nfsPV:
       manga:
         size: "10Gi"
-        policy: "Retain"
-        storageClassName: "suwayomi"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/media/Manga"
-        host: "10.69.1.102"
+        storageClassName: "suwayomi"
       appdata:
         size: "100M"
-        policy: "Retain"
-        storageClassName: "suwayomi"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/suwayomi/data"
-        host: "10.69.1.102"
+        storageClassName: "suwayomi"
+
   calibre:
     enabled: true
     destinationNamespace: books
-    chartURL: "https://github.com/phuchoang2603/self-host.git"
-    chartTargetRevision: "main"
     path: k8s-deploy/homelab/my-chart
-    valuesURL: "https://github.com/phuchoang2603/self-host.git"
-    valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/calibre.yaml
     nfsPV:
       books:
         size: "10Gi"
-        policy: "Retain"
-        storageClassName: "calibre"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/media/Books/Books"
-        host: "10.69.1.102"
+        storageClassName: "calibre"
       config:
         size: "100M"
-        policy: "Retain"
-        storageClassName: "calibre"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/books/calibre-web/config"
-        host: "10.69.1.102"
+        storageClassName: "calibre"
+
   audiobookshelf:
     enabled: true
     destinationNamespace: books
-    chartURL: "https://github.com/phuchoang2603/self-host.git"
-    chartTargetRevision: "main"
     path: k8s-deploy/homelab/my-chart
-    valuesURL: "https://github.com/phuchoang2603/self-host.git"
-    valuesTargetRevision: "main"
     valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
     nfsPV:
       books:
         size: "10Gi"
-        policy: "Retain"
-        storageClassName: "audiobookshelf"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/media/Books"
-        host: "10.69.1.102"
+        storageClassName: "audiobookshelf"
       config:
         size: "101M"
-        policy: "Retain"
-        storageClassName: "audiobookshelf"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/books/audiobookshelf/config"
-        host: "10.69.1.102"
+        storageClassName: "audiobookshelf"
       metadata:
         size: "102M"
-        policy: "Retain"
-        storageClassName: "audiobookshelf"
-        accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
-        host: "10.69.1.102"
+        storageClassName: "audiobookshelf"
+
 # Manual deployments file
 deployments:
-  stremio:
+  others:
     enabled: false
-    repoURL: "https://github.com/phuchoang2603/self-host.git"
-    targetRevision: "main"
-    path: k8s-deploy/homelab/values/stremio
-    destinationNamespace: media
+    path: k8s-deploy/homelab/values/others
+    destinationNamespace: default

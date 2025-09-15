@@ -20,14 +20,14 @@ spec:
   sources:
     # Main source for the Helm Chart
     - chart: {{ $appConfig.chartName | quote }}
-      repoURL: {{ $appConfig.chartURL | quote }}
       path: {{ $appConfig.path | quote }}
-      targetRevision: {{ $appConfig.chartTargetRevision | quote }}
+      repoURL: {{ $appConfig.chartURL | default $.Values.global.gitRepoURL | quote }}
+      targetRevision: {{ $appConfig.chartTargetRevision | default $.Values.global.gitTargetRevision | quote }}
       helm:
         valueFiles:
           - $values/{{ $appConfig.valuesFile }}
-    - repoURL: {{ $appConfig.valuesURL | quote }}
-      targetRevision: {{ $appConfig.valuesTargetRevision | quote }}
+    - repoURL: {{ $appConfig.valuesURL | default $.Values.global.gitRepoURL | quote }}
+      targetRevision: {{ $appConfig.valuesTargetRevision | default $.Values.global.gitTargetRevision | quote }}
       ref: values
   syncPolicy:
     automated:
@@ -37,9 +37,7 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
 ---
-{{- /* Check if any PersistentVolumes are defined for this application */}}
 {{- if $appConfig.nfsPV }}
-  {{- /* Loop through each PersistentVolume and create it */}}
   {{- range $pvName, $pvConfig := $appConfig.nfsPV }}
 # --- PersistentVolume for {{ $appName }}: {{ $pvName }} ---
 apiVersion: v1
@@ -53,10 +51,10 @@ spec:
     storage: {{ $pvConfig.size | quote }}
   accessModes:
     - {{ default "ReadWriteOnce" $pvConfig.accessMode | quote }}
-  persistentVolumeReclaimPolicy: {{ default "Retain" $pvConfig.policy | quote }}
+  persistentVolumeReclaimPolicy: {{ $pvConfig.policy | default "Retain" | quote }}
   nfs:
     path: {{ $pvConfig.path | quote }}
-    server: {{ $pvConfig.host | quote }}
+    server: {{ $pvConfig.host | default $.Values.global.nfs.server | quote }}
     readOnly: false
 ---
   {{- end }}{{/* End of pvConfig loop */}}
