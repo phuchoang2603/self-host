@@ -1,0 +1,52 @@
+# Default values for my-chart.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+image:
+  repository: thewicklowwolf/syncify
+  pullPolicy: IfNotPresent
+  tag: "latest"
+
+env:
+  - name: PUID
+    value: "0"
+  - name: PGID
+    value: "0"
+  - name: TZ
+    value: "America/New_York"
+  - name: thread_limit
+    value: "4"
+  - name: crop_album_art
+    value: "true"
+
+service:
+  type: ClusterIP
+  port: 8083
+  targetPort: 8083
+
+ingress:
+  enabled: true
+  scheme: http
+  insecureSkipVerify: false
+  host: syncify.prod.phuchoang.sbs
+  entryPoints:
+    - websecure
+
+persistence:
+  claims:
+    - name: music
+      storageClassName: "syncify"
+      accessMode: ReadWriteOnce
+      size: 10Gi
+    - name: config
+      storageClassName: "syncify"
+      accessMode: ReadWriteOnce
+      size: 3M
+
+  volumeMounts:
+    - name: music
+      mountPath: /syncify/downloads
+    - name: config
+      mountPath: /syncify/config

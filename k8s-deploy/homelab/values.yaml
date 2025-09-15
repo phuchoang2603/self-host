@@ -105,6 +105,21 @@ applications:
         path: "/mnt/storage/appdata/arr-stack/prowlarr/config"
         storageClassName: "prowlarr"
 
+  syncify:
+    enabled: true
+    destinationNamespace: watching
+    path: k8s-deploy/homelab/my-chart
+    valuesFile: k8s-deploy/homelab/values/syncify.yaml
+    nfsPV:
+      music:
+        size: "10Gi"
+        path: "/mnt/storage/media/Music"
+        storageClassName: "syncify"
+      config:
+        size: "3M"
+        path: "/mnt/storage/appdata/arr-stack/syncify/config"
+        storageClassName: "syncify"
+
 # Manual deployments file
 deployments:
   others:
