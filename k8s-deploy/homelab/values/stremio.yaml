@@ -25,11 +25,12 @@ env:
 
 service:
   type: ClusterIP
-  port: 12470
-  targetPort: 12470
+  port: 8080
+  targetPort: 8080
 
 ingress:
   enabled: true
+  insecureSkipVerify: true
   host: stremio.prod.phuchoang.sbs
   entryPoints:
     - websecure
