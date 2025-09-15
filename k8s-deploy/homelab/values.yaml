@@ -24,7 +24,6 @@ applications:
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
         host: "10.69.1.102"
-
   stremio:
     enabled: true
     destinationNamespace: stremio
@@ -42,7 +41,6 @@ applications:
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/stremio"
         host: "10.69.1.102"
-
   suwayomi:
     enabled: true
     destinationNamespace: suwayomi
@@ -67,7 +65,30 @@ applications:
         accessMode: "ReadWriteOnce"
         path: "/mnt/storage/appdata/suwayomi/data"
         host: "10.69.1.102"
-
+  calibre:
+    enabled: true
+    destinationNamespace: books
+    chartURL: "https://github.com/phuchoang2603/self-host.git"
+    chartTargetRevision: "main"
+    path: k8s-deploy/homelab/my-chart
+    valuesURL: "https://github.com/phuchoang2603/self-host.git"
+    valuesTargetRevision: "main"
+    valuesFile: k8s-deploy/homelab/values/calibre.yaml
+    nfsPV:
+      books:
+        size: "10Gi"
+        policy: "Retain"
+        storageClassName: "calibre"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/media/Books/Books"
+        host: "10.69.1.102"
+      config:
+        size: "1Gi"
+        policy: "Retain"
+        storageClassName: "calibre"
+        accessMode: "ReadWriteOnce"
+        path: "/mnt/storage/appdata/books/calibre-web/config"
+        host: "10.69.1.102"
 # Manual deployments file
 deployments:
   stremio:
