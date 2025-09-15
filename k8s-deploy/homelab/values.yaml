@@ -113,7 +113,7 @@ applications:
     nfsPV:
       music:
         size: "10Gi"
-        path: "/mnt/storage/media/Music"
+        path: "/mnt/storage/media/music"
         storageClassName: "syncify"
       config:
         size: "3M"

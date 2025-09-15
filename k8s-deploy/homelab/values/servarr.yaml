@@ -1253,7 +1253,7 @@ radarr:
 ## @param lidarr.persistence.additionalMounts Additional volume mounts to add to the pod.
 ##
 lidarr:
-  enabled: false
+  enabled: true
   replicaCount: 1
 
   image:
@@ -1296,13 +1296,13 @@ lidarr:
     nodePort: ""
 
   ingress:
-    enabled: false
-    className: ""
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    enabled: true
+    className: "traefik"
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     hosts:
-      - host: chart-example.local
+      - host: lidarr.prod.phuchoang.sbs
         paths:
           - path: /
             pathType: ImplementationSpecific
@@ -1762,7 +1762,7 @@ cleanuperr:
     RADARR__BLOCK__TYPE: "blacklist"
     RADARR__BLOCK__PATH: "https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist_permissive"
     RADARR__INSTANCES__0__URL: "http://servarr-radarr:7878"
-    LIDARR__ENABLED: false
+    LIDARR__ENABLED: true
     LIDARR__IMPORT_FAILED_MAX_STRIKES: "-1"
     LIDARR__BLOCK__TYPE: "blacklist"
     LIDARR__BLOCK__PATH: "https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist_permissive"
