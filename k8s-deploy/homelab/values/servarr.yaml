@@ -1049,7 +1049,7 @@ bazarr:
   env:
     PUID: "1000"
     PGID: "1000"
-    TZ: "Europe/London"
+    TZ: "America/New_York"
 
   persistence:
     enabled: true
@@ -1335,7 +1335,7 @@ lidarr:
   env:
     PUID: "1000"
     PGID: "1000"
-    TZ: "Europe/London"
+    TZ: "America/New_York"
     UMASK: "002"
 
   persistence:
@@ -1479,7 +1479,7 @@ readarr:
   env:
     PUID: "1000"
     PGID: "1000"
-    TZ: "Europe/London"
+    TZ: "America/New_York"
     UMASK: "002"
 
   persistence:
