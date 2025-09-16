@@ -1672,14 +1672,14 @@ cleanuperr:
   secrets:
     existingSecret: ""
     qbittorrent:
-      username: ""
-      password: ""
+      username: "qbittorrent"
+      password: "phuc26032006"
     sonarr:
-      apiKey: ""
+      apiKey: "eb8c2851dc7a4678b6b384abc131fcbc"
     radarr:
-      apiKey: ""
+      apiKey: "0fd93dbe84784f10ad48a56720ff6772"
     lidarr:
-      apiKey: ""
+      apiKey: "057aa5d7c82b4f2282cede1cf94b429b"
 
   env:
     # General Settings
