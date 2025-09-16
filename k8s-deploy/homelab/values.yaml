@@ -25,7 +25,7 @@ applications:
         storageClassName: "karakeep"
 
   suwayomi:
-    enabled: true
+    enabled: false
     destinationNamespace: reading
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
