@@ -32,7 +32,7 @@ applications:
     nfsPV:
       manga:
         size: "10Gi"
-        path: "/mnt/storage/media/Manga"
+        path: "/mnt/storage/media/manga"
         storageClassName: "suwayomi"
       appdata:
         size: "100M"
