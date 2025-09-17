@@ -1397,7 +1397,7 @@ lidarr:
 ## @param readarr.persistence.additionalMounts Additional volume mounts to add to the pod.
 ##
 readarr:
-  enabled: false
+  enabled: true
   replicaCount: 1
 
   image:
@@ -1440,13 +1440,13 @@ readarr:
     nodePort: ""
 
   ingress:
-    enabled: false
-    className: ""
-    annotations: {}
-      # kubernetes.io/ingress.class: nginx
-      # kubernetes.io/tls-acme: "true"
+    enabled: true
+    className: "traefik"
+    annotations:
+      kubernetes.io/ingress.class: traefik
+      cert-manager.io/cluster-issuer: cloudflare-clusterissuer
     hosts:
-      - host: chart-example.local
+      - host: readarr.prod.phuchoang.sbs
         paths:
           - path: /
             pathType: ImplementationSpecific

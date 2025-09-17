@@ -47,7 +47,7 @@ applications:
     nfsPV:
       books:
         size: "10Gi"
-        path: "/mnt/storage/media/Books/Books"
+        path: "/mnt/storage/media/books/Books"
         storageClassName: "calibre"
       config:
         size: "100M"
@@ -55,14 +55,14 @@ applications:
         storageClassName: "calibre"
 
   audiobookshelf:
-    enabled: true
+    enabled: false
     destinationNamespace: reading
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
     nfsPV:
       books:
         size: "10Gi"
-        path: "/mnt/storage/media/Books"
+        path: "/mnt/storage/media/books"
         storageClassName: "audiobookshelf"
       config:
         size: "101M"
