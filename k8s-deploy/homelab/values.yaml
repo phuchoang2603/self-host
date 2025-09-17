@@ -7,7 +7,7 @@ global:
 applications:
   karakeep:
     enabled: true
-    destinationNamespace: reading
+    destinationNamespace: karakeep
     # This chart is from a different repo, so we override the global gitRepoURL
     chartURL: "https://karakeep-app.github.io/helm-charts"
     chartName: karakeep
@@ -24,24 +24,24 @@ applications:
         path: "/mnt/storage/appdata/hoarderr/meilisearch"
         storageClassName: "karakeep"
 
-  suwayomi:
-    enabled: false
-    destinationNamespace: reading
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
-    nfsPV:
-      manga:
-        size: "10Gi"
-        path: "/mnt/storage/media/manga"
-        storageClassName: "suwayomi"
-      appdata:
-        size: "100M"
-        path: "/mnt/storage/appdata/suwayomi/data"
-        storageClassName: "suwayomi"
+  # suwayomi:
+  #   enabled: false
+  #   destinationNamespace: media
+  #   path: k8s-deploy/homelab/my-chart
+  #   valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
+  #   nfsPV:
+  #     manga:
+  #       size: "10Gi"
+  #       path: "/mnt/storage/media/manga"
+  #       storageClassName: "suwayomi"
+  #     appdata:
+  #       size: "100M"
+  #       path: "/mnt/storage/appdata/suwayomi/data"
+  #       storageClassName: "suwayomi"
 
   calibre:
     enabled: true
-    destinationNamespace: reading
+    destinationNamespace: media
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/calibre.yaml
     nfsPV:
@@ -54,28 +54,28 @@ applications:
         path: "/mnt/storage/appdata/books/calibre-web/config"
         storageClassName: "calibre"
 
-  audiobookshelf:
-    enabled: false
-    destinationNamespace: reading
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
-    nfsPV:
-      books:
-        size: "10Gi"
-        path: "/mnt/storage/media/books"
-        storageClassName: "audiobookshelf"
-      config:
-        size: "101M"
-        path: "/mnt/storage/appdata/books/audiobookshelf/config"
-        storageClassName: "audiobookshelf"
-      metadata:
-        size: "102M"
-        path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
-        storageClassName: "audiobookshelf"
+  # audiobookshelf:
+  #   enabled: false
+  #   destinationNamespace: media
+  #   path: k8s-deploy/homelab/my-chart
+  #   valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
+  #   nfsPV:
+  #     books:
+  #       size: "10Gi"
+  #       path: "/mnt/storage/media/books"
+  #       storageClassName: "audiobookshelf"
+  #     config:
+  #       size: "101M"
+  #       path: "/mnt/storage/appdata/books/audiobookshelf/config"
+  #       storageClassName: "audiobookshelf"
+  #     metadata:
+  #       size: "102M"
+  #       path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
+  #       storageClassName: "audiobookshelf"
 
   stremio:
     enabled: true
-    destinationNamespace: watching
+    destinationNamespace: media
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/stremio.yaml
     nfsPV:
@@ -86,7 +86,7 @@ applications:
 
   servarr:
     enabled: true
-    destinationNamespace: watching
+    destinationNamespace: media
     chartURL: "https://charts.kubito.dev"
     chartName: servarr
     chartTargetRevision: "v1.1.7"
@@ -107,7 +107,7 @@ applications:
 
   syncify:
     enabled: true
-    destinationNamespace: watching
+    destinationNamespace: media
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/syncify.yaml
     nfsPV:
