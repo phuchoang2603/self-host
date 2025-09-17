@@ -41,7 +41,7 @@ applications:
 
   calibre:
     enabled: true
-    destinationNamespace: media
+    destinationNamespace: calibre
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/calibre.yaml
     nfsPV:
@@ -75,7 +75,7 @@ applications:
 
   stremio:
     enabled: true
-    destinationNamespace: media
+    destinationNamespace: stremio
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/stremio.yaml
     nfsPV:
@@ -86,7 +86,7 @@ applications:
 
   servarr:
     enabled: true
-    destinationNamespace: media
+    destinationNamespace: servarr
     chartURL: "https://charts.kubito.dev"
     chartName: servarr
     chartTargetRevision: "v1.1.7"
@@ -96,18 +96,10 @@ applications:
         size: "200Gi"
         path: "/mnt/storage/media"
         storageClassName: "media"
-      jellyfin-config:
-        size: "1Gi"
-        path: "/mnt/storage/appdata/arr-stack/jellyfin/config"
-        storageClassName: "jellyfin"
-      prowlarr-config:
-        size: "800Mi"
-        path: "/mnt/storage/appdata/arr-stack/prowlarr/config"
-        storageClassName: "prowlarr"
 
   syncify:
     enabled: true
-    destinationNamespace: media
+    destinationNamespace: syncify
     path: k8s-deploy/homelab/my-chart
     valuesFile: k8s-deploy/homelab/values/syncify.yaml
     nfsPV:

@@ -107,7 +107,7 @@ jellyfin:
   persistence:
     config:
       enabled: true
-      storageClass: "jellyfin"
+      storageClass: ""
       existingClaim: ""
       subPath: ""
       accessMode: ReadWriteOnce
@@ -650,7 +650,7 @@ prowlarr:
 
   persistence:
     enabled: true
-    storageClass: "prowlarr"
+    storageClass: ""
     existingClaim: ""
     accessMode: ReadWriteOnce
     size: 800Mi
