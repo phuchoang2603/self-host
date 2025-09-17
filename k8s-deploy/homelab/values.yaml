@@ -96,6 +96,34 @@ applications:
         size: "200Gi"
         path: "/mnt/storage/media"
         storageClassName: "media"
+      jellyfin-config:
+        path: /mnt/storage/appdata/arr-stack/jellyfin
+        size: "1Gi"
+        storageClassName: jellyfin
+      sonarr-config:
+        path: /mnt/storage/appdata/arr-stack/sonarr
+        size: "800Mi"
+        storageClassName: sonarr
+      qbit-config:
+        path: /mnt/storage/appdata/arr-stack/qbit
+        size: "800Mi"
+        storageClassName: qbit
+      prowlarr-config:
+        path: /mnt/storage/appdata/arr-stack/prowlarr
+        size: "800Mi"
+        storageClassName: prowlarr
+      radarr-config:
+        path: /mnt/storage/appdata/arr-stack/radarr
+        size: "800Mi"
+        storageClassName: radarr
+      lidarr-config:
+        path: /mnt/storage/appdata/arr-stack/lidarr
+        size: "800Mi"
+        storageClassName: lidarr
+      readarr-config:
+        path: /mnt/storage/appdata/arr-stack/readarr
+        size: "800Mi"
+        storageClassName: readarr
 
   syncify:
     enabled: true
