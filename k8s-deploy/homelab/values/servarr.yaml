@@ -1769,11 +1769,6 @@ cleanuperr:
     LIDARR__BLOCK__TYPE: "blacklist"
     LIDARR__BLOCK__PATH: "https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist_permissive"
     LIDARR__INSTANCES__0__URL: "http://servarr-lidarr:8686"
-    READARR__ENABLED: true
-    READARR__IMPORT_FAILED_MAX_STRIKES: "-1"
-    READARR__BLOCK__TYPE: "blacklist"
-    READARR__BLOCK__PATH: "https://raw.githubusercontent.com/flmorg/cleanuperr/refs/heads/main/blacklist_permissive"
-    READARR__INSTANCES__0__URL: "http://servarr-readarr:8787"
 
   ignoredDownloads:
     # List of entries to add to the ignored_downloads.txt file
