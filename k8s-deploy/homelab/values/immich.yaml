@@ -48,4 +48,4 @@ envFrom:
       name: immich-postgres-user
 
 env:
-  DB_HOSTNAME: "immich-postgres-rw"
+  DB_HOSTNAME: "immich-postgres-rw.cloudnative-pg.svc.cluster.local"
