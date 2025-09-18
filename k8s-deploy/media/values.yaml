@@ -13,7 +13,7 @@ applications:
     chartName: karakeep
     chartTargetRevision: "v0.26.0"
     # The values file still comes from our main git repo (inherited from global)
-    valuesFile: k8s-deploy/homelab/values/karakeep.yaml
+    valuesFile: k8s-deploy/media/values/karakeep.yaml
     nfsPV:
       data:
         size: "2Gi"
@@ -27,8 +27,8 @@ applications:
   # suwayomi:
   #   enabled: false
   #   destinationNamespace: media
-  #   path: k8s-deploy/homelab/my-chart
-  #   valuesFile: k8s-deploy/homelab/values/suwayomi.yaml
+  #   path: k8s-deploy/media/my-chart
+  #   valuesFile: k8s-deploy/media/values/suwayomi.yaml
   #   nfsPV:
   #     manga:
   #       size: "10Gi"
@@ -42,8 +42,8 @@ applications:
   calibre:
     enabled: true
     destinationNamespace: calibre
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/calibre.yaml
+    path: k8s-deploy/media/my-chart
+    valuesFile: k8s-deploy/media/values/calibre.yaml
     nfsPV:
       books:
         size: "10Gi"
@@ -57,8 +57,8 @@ applications:
   stremio:
     enabled: true
     destinationNamespace: stremio
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/stremio.yaml
+    path: k8s-deploy/media/my-chart
+    valuesFile: k8s-deploy/media/values/stremio.yaml
     nfsPV:
       stremio-server:
         size: "3Gi"
@@ -71,7 +71,7 @@ applications:
     chartURL: "https://charts.kubito.dev"
     chartName: servarr
     chartTargetRevision: "v1.1.7"
-    valuesFile: k8s-deploy/homelab/values/servarr.yaml
+    valuesFile: k8s-deploy/media/values/servarr.yaml
     nfsPV:
       media:
         size: "200Gi"
@@ -109,8 +109,8 @@ applications:
   syncify:
     enabled: true
     destinationNamespace: syncify
-    path: k8s-deploy/homelab/my-chart
-    valuesFile: k8s-deploy/homelab/values/syncify.yaml
+    path: k8s-deploy/media/my-chart
+    valuesFile: k8s-deploy/media/values/syncify.yaml
     nfsPV:
       music:
         size: "10Gi"
@@ -127,7 +127,7 @@ applications:
     chartURL: "https://immich-app.github.io/immich-charts"
     chartName: immich
     chartTargetRevision: "v0.9.3"
-    valuesFile: k8s-deploy/homelab/values/immich.yaml
+    valuesFile: k8s-deploy/media/values/immich.yaml
     nfsPV:
       library:
         size: "100Gi"
@@ -139,5 +139,5 @@ applications:
 deployments:
   immich-db:
     enabled: true
-    path: k8s-deploy/homelab/values/immich-db
+    path: k8s-deploy/media/values/immich-db
     destinationNamespace: cloudnative-pg

@@ -4,7 +4,7 @@ global:
 
 applications:
   cloudnative-pg:
-    enabled: false
+    enabled: true
     destinationNamespace: cloudnative-pg
     chartURL: "https://cloudnative-pg.github.io/charts"
     chartName: cloudnative-pg
