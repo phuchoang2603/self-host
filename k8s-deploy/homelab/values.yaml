@@ -123,7 +123,7 @@ applications:
 
 # Manual deployments file
 deployments:
-  immich-vchord-db:
+  immich-db:
     enabled: true
-    path: k8s-deploy/homelab/values/others
+    path: k8s-deploy/homelab/values/immich
     destinationNamespace: cloudnative-pg

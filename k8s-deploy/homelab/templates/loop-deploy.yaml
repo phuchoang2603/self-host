@@ -17,9 +17,9 @@ spec:
     server: "https://kubernetes.default.svc"
     namespace: {{ $appConfig.destinationNamespace | quote }}
   source:
-    repoURL: {{ $appConfig.repoURL | quote }}
+    repoURL: {{ $appConfig.chartURL | default $.Values.global.gitRepoURL | quote }}
     path: {{ $appConfig.path | quote }}
-    targetRevision: {{  $appConfig.targetRevision | quote }}
+    targetRevision: {{ $appConfig.chartTargetRevision | default $.Values.global.gitTargetRevision | quote }}
   syncPolicy:
     automated:
       prune: true
