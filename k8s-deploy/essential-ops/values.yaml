@@ -33,3 +33,4 @@ applications:
         size: "10Gi"
         path: "/mnt/storage/appdata/vault"
         storageClassName: "vault"
+        pvc: true
