@@ -1401,9 +1401,9 @@ readarr:
   replicaCount: 1
 
   image:
-    repository: lscr.io/linuxserver/readarr
+    repository: ghcr.io/pennydreadful/bookshelf
     pullPolicy: IfNotPresent
-    tag: "0.4.2-develop"
+    tag: "hardcover-v0.4.20.91"
 
   imagePullSecrets: []
 
