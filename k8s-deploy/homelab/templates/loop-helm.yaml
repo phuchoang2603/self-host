@@ -69,6 +69,7 @@ spec:
   resources:
     requests:
       storage: {{ $pvConfig.size | quote }}
+---
 {{- end }} {{/* End of if pvc */}}
   {{- end }}{{/* End of pvConfig loop */}}
 {{- end }}{{/* End of if nfsPV */}}

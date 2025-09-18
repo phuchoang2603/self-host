@@ -9,7 +9,7 @@ image:
 immich:
   persistence:
     library:
-      existingClaim: "immich-pvc"
+      existingClaim: "immich-library-pvc"
 
 # Dependencies
 postgresql:
