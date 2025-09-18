@@ -21,7 +21,7 @@ applications:
 
   sealed-secrets:
     enabled: true
-    destinationNamespace: sealed-secrets
+    destinationNamespace: kube-system
     chartURL: "https://bitnami-labs.github.io/sealed-secrets"
     chartName: sealed-secrets
     chartTargetRevision: "v2.17.7"
