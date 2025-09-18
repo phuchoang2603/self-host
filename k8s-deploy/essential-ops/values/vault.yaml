@@ -1,0 +1,13 @@
+server:
+  ingress:
+    enabled: true
+    ingressClassName: "traefik"
+    pathType: Prefix
+    activeService: true
+    hosts:
+      - host: vault.prod.phuchoang.sbs
+
+  dataStorage:
+    enabled: true
+    size: 10Gi
+    storageClass: "vault"

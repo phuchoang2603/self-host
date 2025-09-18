@@ -1,6 +1,8 @@
 global:
   gitRepoURL: "https://github.com/phuchoang2603/self-host.git"
   gitTargetRevision: "main"
+  nfs:
+    server: "10.69.1.102"
 
 applications:
   cloudnative-pg:
@@ -19,10 +21,15 @@ applications:
     chartTargetRevision: "v0.33.0"
     valuesFile: k8s-deploy/essential-ops/values/descheduler.yaml
 
-  sealed-secrets:
+  vault:
     enabled: true
-    destinationNamespace: kube-system
-    chartURL: "https://bitnami-labs.github.io/sealed-secrets"
-    chartName: sealed-secrets
-    chartTargetRevision: "v2.17.7"
-    valuesFile: k8s-deploy/essential-ops/values/sealed-secrets.yaml
+    destinationNamespace: vault
+    chartURL: "https://helm.releases.hashicorp.com"
+    chartName: vault
+    chartTargetRevision: "v0.30.1"
+    valuesFile: k8s-deploy/essential-ops/values/vault.yaml
+    nfsPV:
+      dataStorage:
+        size: "10Gi"
+        path: "/mnt/storage/appdata/vault"
+        storageClassName: "vault"
