@@ -1,0 +1,59 @@
+kind: Deployment
+
+# Required when running as a Deployment
+deschedulingInterval: 5m
+
+# Specifies the replica count for Deployment
+# Set leaderElection if you want to use more than 1 replica
+# Set affinity.podAntiAffinity rule if you want to schedule onto a node
+# only if that node is in the same zone as at least one already-running descheduler
+replicas: 3
+
+# Specifies whether Leader Election resources should be created
+# Required when running as a Deployment
+leaderElection:
+  enabled: true
+
+# deschedulerPolicy contains the policies the descheduler will execute.
+deschedulerPolicy:
+  profiles:
+    - name: default
+      pluginConfig:
+        - name: DefaultEvictor
+          args:
+            ignorePvcPods: false
+            evictLocalStoragePods: true
+        - name: RemoveDuplicates
+        - name: RemovePodsHavingTooManyRestarts
+          args:
+            podRestartThreshold: 25
+            includingInitContainers: true
+        - name: RemovePodsViolatingNodeAffinity
+          args:
+            nodeAffinityType:
+              - requiredDuringSchedulingIgnoredDuringExecution
+        - name: RemovePodsViolatingNodeTaints
+        - name: RemovePodsViolatingInterPodAntiAffinity
+        - name: RemovePodsViolatingTopologySpreadConstraint
+        - name: LowNodeUtilization
+          args:
+            thresholds:
+              cpu: 30
+              memory: 30
+              pods: 30
+            targetThresholds:
+              cpu: 70
+              memory: 70
+              pods: 70
+      plugins:
+        balance:
+          enabled:
+            - RemoveDuplicates
+            - RemovePodsViolatingTopologySpreadConstraint
+            - LowNodeUtilization
+        deschedule:
+          enabled:
+            - RemovePodsHavingTooManyRestarts
+            - RemovePodsViolatingNodeTaints
+            - RemovePodsViolatingNodeAffinity
+            - RemovePodsViolatingInterPodAntiAffinity

@@ -1,0 +1,41 @@
+{{- /*
+  Loop through all defined applications in .Values.applications
+  and create an ArgoCD Application resource for each.
+*/}}
+{{- range $appName, $appConfig := .Values.applications }}
+{{- if $appConfig.enabled }}
+# --- ArgoCD Application for {{ $appName }} ---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $appName | quote }}
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: {{ $appConfig.destinationNamespace | quote }}
+  sources:
+    # Main source for the Helm Chart
+    - chart: {{ $appConfig.chartName | quote }}
+      path: {{ $appConfig.path | quote }}
+      repoURL: {{ $appConfig.chartURL | default $.Values.global.gitRepoURL | quote }}
+      targetRevision: {{ $appConfig.chartTargetRevision | default $.Values.global.gitTargetRevision | quote }}
+      helm:
+        valueFiles:
+          - $values/{{ $appConfig.valuesFile }}
+    - repoURL: {{ $appConfig.valuesURL | default $.Values.global.gitRepoURL | quote }}
+      targetRevision: {{ $appConfig.valuesTargetRevision | default $.Values.global.gitTargetRevision | quote }}
+      ref: values
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+{{- end }}{{/* End of if enabled */}}
+{{- end }}{{/* End of appConfig loop */}}

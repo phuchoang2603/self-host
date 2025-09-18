@@ -1,0 +1,32 @@
+{{- /*
+  Loop through all defined applications in .Values.deployments
+  and create an ArgoCD Application resource for each.
+*/}}
+{{- range $appName, $appConfig := .Values.deployments }}
+{{- if $appConfig.enabled }}
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ $appName | quote }}
+  namespace: argo-cd
+  finalizers:
+    - resources-finalizer.argocd.argoproj.io
+spec:
+  project: default
+  destination:
+    server: "https://kubernetes.default.svc"
+    namespace: {{ $appConfig.destinationNamespace | quote }}
+  source:
+    repoURL: {{ $appConfig.chartURL | default $.Values.global.gitRepoURL | quote }}
+    path: {{ $appConfig.path | quote }}
+    targetRevision: {{ $appConfig.chartTargetRevision | default $.Values.global.gitTargetRevision | quote }}
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
+      - ServerSideApply=true
+---
+{{- end }}
+{{- end }}

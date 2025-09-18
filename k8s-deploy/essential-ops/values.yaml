@@ -1,0 +1,28 @@
+global:
+  gitRepoURL: "https://github.com/phuchoang2603/self-host.git"
+  gitTargetRevision: "main"
+
+applications:
+  cloudnative-pg:
+    enabled: false
+    destinationNamespace: cloudnative-pg
+    chartURL: "https://cloudnative-pg.github.io/charts"
+    chartName: cloudnative-pg
+    chartTargetRevision: "v0.26.0"
+    valuesFile: k8s-deploy/essential-ops/values/cloudnative-pg.yaml
+
+  descheduler:
+    enabled: true
+    destinationNamespace: kube-system
+    chartURL: "https://kubernetes-sigs.github.io/descheduler/"
+    chartName: descheduler
+    chartTargetRevision: "v0.33.0"
+    valuesFile: k8s-deploy/essential-ops/values/descheduler.yaml
+
+  sealed-secrets:
+    enabled: true
+    destinationNamespace: sealed-secrets
+    chartURL: "https://bitnami-labs.github.io/sealed-secrets"
+    chartName: sealed-secrets
+    chartTargetRevision: "v0.32.2"
+    valuesFile: k8s-deploy/essential-ops/values/sealed-secrets.yaml
