@@ -4,8 +4,7 @@ image:
 immich:
   persistence:
     library:
-      storageClass: "immich"
-      size: 100Gi
+      existingClaim: "immich-pvc"
 
 # Dependencies
 postgresql:
