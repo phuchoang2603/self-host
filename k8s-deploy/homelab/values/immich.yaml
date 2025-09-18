@@ -43,9 +43,17 @@ server:
 machine-learning:
   enabled: false
 
-envFrom:
-  - secretRef:
-      name: immich-postgres-user
-
 env:
+  REDIS_HOSTNAME: '{{ printf "%s-redis-master" .Release.Name }}'
   DB_HOSTNAME: "immich-postgres-rw.cloudnative-pg.svc.cluster.local"
+  DB_USERNAME:
+    valueFrom:
+      secretKeyRef:
+        name: immich-postgres-user
+        key: username
+  DB_PASSWORD:
+    valueFrom:
+      secretKeyRef:
+        name: immich-postgres-user
+        key: password
+  DB_DATABASE_NAME: "immich"
