@@ -17,7 +17,7 @@ redis:
     enabled: false
   image:
     repository: valkey/valkey
-    tag: "8-bookworm"
+    tag: 8-bookworm@sha256:a137a2b60aca1a75130022d6bb96af423fefae4eb55faf395732db3544803280
 
 # Immich components
 
