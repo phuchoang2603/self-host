@@ -1,3 +1,8 @@
+# Allow using another redis image
+global:
+  security:
+    allowInsecureImages: true
+
 image:
   tag: v1.139.4
 
