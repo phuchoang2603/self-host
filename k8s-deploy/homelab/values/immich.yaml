@@ -16,7 +16,7 @@ redis:
   auth:
     enabled: false
   image:
-    repository: docker.io/valkey/valkey
+    repository: valkey/valkey
     tag: "8-bookworm"
 
 # Immich components
