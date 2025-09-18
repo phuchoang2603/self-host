@@ -1,9 +1,0 @@
-alertmanager:
-  enabled: true
-  ingress:
-    enabled: false
-
-grafana:
-  enabled: true
-  adminUser: admin
-  adminPassword: prom-operator

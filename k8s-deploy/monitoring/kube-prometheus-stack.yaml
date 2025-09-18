@@ -16,10 +16,10 @@ spec:
       targetRevision: 72.6.2
       helm:
         valueFiles:
-          - $values/monitoring/values-local.yaml # Relative path from repo root
-    - repoURL: https://github.com/phuchoang2603/k8s-deploy.git
-      targetRevision: master
-      ref: values # Reference for $values above
+          - $values/k8s-deploy/monitoring/values.yaml
+    - repoURL: "https://github.com/phuchoang2603/self-host.git"
+      targetRevision: main
+      ref: values
   syncPolicy:
     automated:
       prune: true
@@ -37,7 +37,7 @@ spec:
   entryPoints:
     - websecure
   routes:
-    - match: Host(`grafana.home.phuchoang.sbs`)
+    - match: Host(`grafana.prod.phuchoang.sbs`)
       kind: Rule
       services:
         - name: kube-prometheus-stack-grafana
