@@ -29,7 +29,7 @@ applications:
     chartTargetRevision: "v0.30.1"
     valuesFile: k8s-deploy/essential-ops/values/vault.yaml
     nfsPV:
-      dataStorage:
+      data-storage:
         size: "10Gi"
         path: "/mnt/storage/appdata/vault"
         storageClassName: "vault"

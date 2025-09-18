@@ -11,3 +11,7 @@ server:
     enabled: true
     size: 10Gi
     storageClass: "vault"
+
+  dev:
+    enabled: true
+    devRootToken: "root"
