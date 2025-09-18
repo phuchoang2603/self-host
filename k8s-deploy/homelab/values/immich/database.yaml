@@ -4,19 +4,21 @@ metadata:
   name: immich-postgres
   namespace: cloudnative-pg
 spec:
+  instances: 1
+  imageName: tensorchord/cloudnative-vectorchord:16.9-0.4.3
+
+  postgresql:
+    shared_preload_libraries:
+      - "vchord.so"
+
   managed:
     roles:
       - name: immich
-        ensure: present
-        login: true
         superuser: true
+        login: true
         passwordSecret:
           name: immich-postgres-user
-        connectionLimit: -1
-        inherit: true
-  instances: 1
-  imageName: tensorchord/cloudnative-vectorchord:16.9-0.4.3
-  primaryUpdateStrategy: unsupervised
+
   bootstrap:
     initdb:
       database: immich
@@ -25,12 +27,11 @@ spec:
         name: immich-postgres-user
       postInitSQL:
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
+
   storage:
     size: 20Gi
     storageClass: "longhorn"
-  postgresql:
-    shared_preload_libraries:
-      - "vchord.so"
+
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true
