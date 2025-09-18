@@ -54,25 +54,6 @@ applications:
         path: "/mnt/storage/appdata/books/calibre-web/config"
         storageClassName: "calibre"
 
-  # audiobookshelf:
-  #   enabled: false
-  #   destinationNamespace: media
-  #   path: k8s-deploy/homelab/my-chart
-  #   valuesFile: k8s-deploy/homelab/values/audiobookshelf.yaml
-  #   nfsPV:
-  #     books:
-  #       size: "10Gi"
-  #       path: "/mnt/storage/media/books"
-  #       storageClassName: "audiobookshelf"
-  #     config:
-  #       size: "101M"
-  #       path: "/mnt/storage/appdata/books/audiobookshelf/config"
-  #       storageClassName: "audiobookshelf"
-  #     metadata:
-  #       size: "102M"
-  #       path: "/mnt/storage/appdata/books/audiobookshelf/metadata"
-  #       storageClassName: "audiobookshelf"
-
   stremio:
     enabled: true
     destinationNamespace: stremio
