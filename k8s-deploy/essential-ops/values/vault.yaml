@@ -8,16 +8,9 @@ server:
       - host: vault.prod.phuchoang.sbs
 
   dataStorage:
-    enabled: false
-
-  volumes:
-    - name: raft-storage
-      persistentVolumeClaim:
-        claimName: vault-data-storage-pvc
-
-  volumeMounts:
-    - name: raft-storage
-      mountPath: /vault/data
+    enabled: true
+    size: 10Gi
+    storageClass: "longhorn"
 
   ha:
     enabled: true
