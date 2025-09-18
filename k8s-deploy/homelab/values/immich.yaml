@@ -1,0 +1,44 @@
+image:
+  tag: v1.139.4
+
+immich:
+  persistence:
+    library:
+      storageClass: "immich"
+      size: 100Gi
+
+# Dependencies
+postgresql:
+  enabled: false
+
+redis:
+  enabled: true
+  architecture: standalone
+  auth:
+    enabled: false
+
+# Immich components
+
+server:
+  enabled: true
+  image:
+    repository: ghcr.io/immich-app/immich-server
+    pullPolicy: IfNotPresent
+
+  ingress:
+    main:
+      enabled: true
+      hosts:
+        - host: immich.prod.phuchoang.sbs
+          paths:
+            - path: "/"
+
+machine-learning:
+  enabled: false
+
+envFrom:
+  - secretRef:
+      name: immich-postgres-user
+
+env:
+  DB_HOSTNAME: "immich-postgres-rw"

@@ -1,7 +1,7 @@
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-  name: immich-vchord-db
+  name: immich-postgres
 spec:
   managed:
     roles:
@@ -26,14 +26,10 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
   storage:
     size: 20Gi
-    storageClass: ""
-  enableSuperuserAccess: true
+    storageClass: "immich"
   postgresql:
     shared_preload_libraries:
       - "vchord.so"
-    parameters:
-      max_connections: "400"
-      shared_buffers: 256MB
   nodeMaintenanceWindow:
     inProgress: false
     reusePVC: true

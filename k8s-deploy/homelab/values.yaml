@@ -121,6 +121,23 @@ applications:
         path: "/mnt/storage/appdata/arr-stack/syncify/config"
         storageClassName: "syncify"
 
+  immich:
+    enabled: true
+    destinationNamespace: immich
+    chartURL: "https://immich-app.github.io/immich-charts"
+    chartName: immich
+    chartTargetRevision: "v0.9.3"
+    valuesFile: k8s-deploy/homelab/values/immich.yaml
+    nfsPV:
+      library:
+        size: "100Gi"
+        path: "/mnt/storage/appdata/immich/upload"
+        storageClassName: "immich"
+      database:
+        size: "20Gi"
+        path: "/mnt/storage/appdata/immich/database"
+        storageClassName: "immich"
+
 # Manual deployments file
 deployments:
   immich-db:
