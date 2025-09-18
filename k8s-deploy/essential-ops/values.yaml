@@ -28,9 +28,10 @@ applications:
     chartName: vault
     chartTargetRevision: "v0.30.1"
     valuesFile: k8s-deploy/essential-ops/values/vault.yaml
-    nfsPV:
+    volumes:
       data-storage:
+        type: "longhorn"
+        storageClassName: "longhorn"
         size: "10Gi"
-        path: "/mnt/storage/appdata/vault"
-        storageClassName: "vault"
+        accessMode: "ReadWriteMany"
         pvc: true

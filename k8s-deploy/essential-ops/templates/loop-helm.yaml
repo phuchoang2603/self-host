@@ -37,41 +37,43 @@ spec:
       - CreateNamespace=true
       - ServerSideApply=true
 ---
-{{- if $appConfig.nfsPV }}
-  {{- range $pvName, $pvConfig := $appConfig.nfsPV }}
-# --- PersistentVolume for {{ $appName }}: {{ $pvName }} ---
+{{- /* A generic loop for creating volumes */}}
+{{- if $appConfig.volumes }}
+{{- range $volumeName, $volumeConfig := $appConfig.volumes }}
+{{- if eq ($volumeConfig.type | default "nfs") "nfs" }}
 apiVersion: v1
 kind: PersistentVolume
 metadata:
-  name: {{ printf "%s-%s" $appName $pvName }}
+  name: {{ printf "%s-%s" $appName $volumeName }}
 spec:
-  storageClassName: {{ $pvConfig.storageClassName | quote }}
+  storageClassName: {{ $volumeConfig.storageClassName | quote }}
   capacity:
-    storage: {{ $pvConfig.size | quote }}
+    storage: {{ $volumeConfig.size | quote }}
   accessModes:
-    - {{ default "ReadWriteOnce" $pvConfig.accessMode | quote }}
-  persistentVolumeReclaimPolicy: {{ $pvConfig.policy | default "Retain" | quote }}
+    - {{ default "ReadWriteOnce" $volumeConfig.accessMode | quote }}
+  persistentVolumeReclaimPolicy: {{ $volumeConfig.policy | default "Retain" | quote }}
   nfs:
-    path: {{ $pvConfig.path | quote }}
-    server: {{ $pvConfig.host | default $.Values.global.nfs.server | quote }}
+    path: {{ $volumeConfig.nfs.path | quote }}
+    server: {{ $volumeConfig.nfs.server | default $.Values.global.nfs.server | quote }}
     readOnly: false
 ---
-{{- if $pvConfig.pvc }}
+{{- end }} {{/* End of PV creation for NFS type */}}
+{{- if $volumeConfig.pvc }}
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: {{ printf "%s-%s" $appName $pvName }}-pvc
+  name: {{ printf "%s-%s" $appName $volumeName }}-pvc
   namespace: {{ $appConfig.destinationNamespace | quote }}
 spec:
   accessModes:
-    - {{ default "ReadWriteOnce" $pvConfig.accessMode | quote }}
-  storageClassName: {{ $pvConfig.storageClassName | quote }}
+    - {{ default "ReadWriteOnce" $volumeConfig.accessMode | quote }}
+  storageClassName: {{ $volumeConfig.storageClassName | quote }}
   resources:
     requests:
-      storage: {{ $pvConfig.size | quote }}
+      storage: {{ $volumeConfig.size | quote }}
 ---
 {{- end }} {{/* End of if pvc */}}
-  {{- end }}{{/* End of pvConfig loop */}}
-{{- end }}{{/* End of if nfsPV */}}
+  {{- end }}{{/* End of volumeConfig loop */}}
+{{- end }}{{/* End of if volumes */}}
 {{- end }}{{/* End of if enabled */}}
 {{- end }}{{/* End of appConfig loop */}}
