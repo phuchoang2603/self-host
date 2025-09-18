@@ -26,7 +26,7 @@ spec:
         - CREATE EXTENSION IF NOT EXISTS vchord CASCADE;
   storage:
     size: 20Gi
-    storageClass: "immich"
+    storageClass: "longhorn"
   postgresql:
     shared_preload_libraries:
       - "vchord.so"

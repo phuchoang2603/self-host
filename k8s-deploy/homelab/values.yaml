@@ -133,14 +133,10 @@ applications:
         size: "100Gi"
         path: "/mnt/storage/appdata/immich/upload"
         storageClassName: "immich"
-      database:
-        size: "20Gi"
-        path: "/mnt/storage/appdata/immich/database"
-        storageClassName: "immich"
 
 # Manual deployments file
 deployments:
   immich-db:
     enabled: true
     path: k8s-deploy/homelab/values/immich
-    destinationNamespace: cloudnative-pg
+    destinationNamespace: immich
