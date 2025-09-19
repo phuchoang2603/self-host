@@ -140,4 +140,4 @@ deployments:
   immich-db:
     enabled: true
     path: k8s-deploy/media/values/immich-db
-    destinationNamespace: cloudnative-pg
+    destinationNamespace: immich

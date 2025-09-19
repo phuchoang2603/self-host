@@ -1,0 +1,15 @@
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: immich-postgres-user-eso
+spec:
+  refreshInterval: 1h
+  secretStoreRef:
+    name: aws-cluster-secret-store
+    kind: ClusterSecretStore
+  target:
+    name: immich-postgres-user
+    creationPolicy: Owner
+  dataFrom:
+    - extract:
+        key: immich-postgres-user
