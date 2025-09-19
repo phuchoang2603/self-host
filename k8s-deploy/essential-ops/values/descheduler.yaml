@@ -21,7 +21,7 @@ deschedulerPolicy:
       pluginConfig:
         - name: DefaultEvictor
           args:
-            ignorePvcPods: false
+            ignorePvcPods: true
             evictLocalStoragePods: true
         - name: RemoveDuplicates
         - name: RemovePodsHavingTooManyRestarts
@@ -42,9 +42,9 @@ deschedulerPolicy:
               memory: 30
               pods: 30
             targetThresholds:
-              cpu: 70
-              memory: 70
-              pods: 70
+              cpu: 80
+              memory: 80
+              pods: 80
       plugins:
         balance:
           enabled:
