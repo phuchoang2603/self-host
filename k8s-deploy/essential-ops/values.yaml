@@ -21,8 +21,18 @@ applications:
     chartTargetRevision: "v0.33.0"
     valuesFile: k8s-deploy/essential-ops/values/descheduler.yaml
 
-  vault:
+  external-secrets:
     enabled: true
+    destinationNamespace: external-secrets
+    chartURL: "https://charts.external-secrets.io"
+    chartName: external-secrets
+    chartTargetRevision: "v0.19.2"
+    valuesFile: k8s-deploy/essential-ops/values/external-secrets.yaml
+
+  vault:
+    # disabled because i use aws kms currently,
+    # might need it later if my free credit is expired
+    enabled: false
     destinationNamespace: vault
     chartURL: "https://helm.releases.hashicorp.com"
     chartName: vault
