@@ -27,7 +27,7 @@ applications:
     chartURL: "https://charts.external-secrets.io"
     chartName: external-secrets
     chartTargetRevision: "v0.19.2"
-    valuesFile: k8s-deploy/essential-ops/values/external-secrets.yaml
+    valuesFile: k8s-deploy/essential-ops/values/eso/external-secrets.yaml
 
   vault:
     # disabled because i use aws kms currently,
