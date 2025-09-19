@@ -28,13 +28,3 @@ applications:
     chartName: external-secrets
     chartTargetRevision: "v0.19.2"
     valuesFile: k8s-deploy/essential-ops/values/eso/external-secrets.yaml
-
-  vault:
-    # disabled because i use aws kms currently,
-    # might need it later if my free credit is expired
-    enabled: false
-    destinationNamespace: vault
-    chartURL: "https://helm.releases.hashicorp.com"
-    chartName: vault
-    chartTargetRevision: "v0.30.1"
-    valuesFile: k8s-deploy/essential-ops/values/vault.yaml
