@@ -1,2 +1,2 @@
 config:
-  clusterWide: false
+  clusterWide: true
