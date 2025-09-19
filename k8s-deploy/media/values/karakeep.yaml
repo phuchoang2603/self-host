@@ -22,7 +22,6 @@ controllers:
 
         env:
           NEXTAUTH_URL: "{{ .Values.applicationProtocol }}://{{ .Values.applicationHost }}"
-
           DATA_DIR: /data
           MEILI_ADDR: "http://{{ .Release.Name }}-meilisearch:7700"
           BROWSER_WEB_URL: http://{{ .Release.Name }}-chrome:9222
