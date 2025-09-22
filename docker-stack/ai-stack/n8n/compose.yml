@@ -1,0 +1,58 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    hostname: n8n
+    network_mode: ollama
+    ports:
+      - "5678:5678"
+    environment:
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_RUNNERS_ENABLED=true
+      - WEBHOOK_URL=https://${SUBDOMAIN}.${DOMAIN_NAME}/
+      - OLLAMA_HOST=${OLLAMA_HOST:-ollama:11434}
+      - TZ=${GENERIC_TIMEZONE}
+    volumes:
+      - ${APPDATA}/n8n/storage:/home/node/.n8n
+      - ${SHARED_FOLDER}:/files
+    restart: always
+
+  ollama:
+    image: ollama/ollama:latest
+    hostname: ollama
+    network_mode: ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      OLLAMA_KEEP_ALIVE: -1
+      OLLAMA_FLASH_ATTENTION: 1
+      OLLAMA_KV_CACHE_TYPE: q4_0
+    volumes:
+      - ${APPDATA}/ollama:/root/.ollama
+    restart: unless-stopped
+
+  mcp-gateway:
+    image: docker/mcp-gateway
+    hostname: mcp-gateway
+    network_mode: ollama
+    ports:
+      - "8811:8811"
+    command:
+      - --servers=arxiv-mcp-server
+      - --catalog=/mcp/catalog.yaml
+      - --transport=sse
+      - --port=8811
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./catalog.yaml:/mcp/catalog.yaml
+
+networks:
+  ollama:
+    driver: bridge

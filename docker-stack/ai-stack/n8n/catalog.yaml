@@ -1,0 +1,19 @@
+registry:
+  arxiv-mcp-server:
+    title: "ArXiv MCP Server"
+    description: "An MCP server that enables AI assistants to search, download, and read papers from the arXiv research repository."
+    type: "server"
+    image: "arxiv-mcp-server:latest"
+    tools:
+      - name: "search_papers"
+      - name: "download_paper"
+      - name: "list_papers"
+      - name: "read_paper"
+      - name: "deep-paper-analysis"
+
+    env:
+      - name: "ARXIV_STORAGE_PATH"
+        value: "/data"
+
+    volumes:
+      - "/mnt/storage/media/docs:/data"
