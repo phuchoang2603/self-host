@@ -1,35 +1,10 @@
 name: ollama
 services:
-  ollama:
-    image: ollama/ollama:latest
-    # pull_policy: always
-    container_name: ollama
-    restart: unless-stopped
-    environment:
-      - PUID=0
-      - PGID=0
-      - OLLAMA_KEEP_ALIVE=-1
-      - OLLAMA_FLASH_ATTENTION=1
-      - OLLAMA_KV_CACHE_TYPE=q4_0
-    volumes:
-      - /etc/localtime:/etc/localtime:ro
-      - /etc/timezone:/etc/timezone:ro
-      - ${APPDATA}/ollama:/root/.ollama
-    ports:
-      - "11434:11434" # Add this line to expose the port
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-
   open-webui:
     image: ghcr.io/open-webui/open-webui:latest
-    # pull_policy: always
     container_name: open-webui
     restart: unless-stopped
+    network_mode: ollama
     environment:
       - PUID=0
       - PGID=0
@@ -40,3 +15,22 @@ services:
       - ${APPDATA}/open-webui:/app/backend/data
     ports:
       - "8081:8080" # Add this line to expose the port
+
+  ollama:
+    image: ollama/ollama:latest
+    hostname: ollama
+    network_mode: ollama
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
+    environment:
+      OLLAMA_KEEP_ALIVE: -1
+      OLLAMA_FLASH_ATTENTION: 1
+      OLLAMA_KV_CACHE_TYPE: q4_0
+    volumes:
+      - ${APPDATA}/ollama:/root/.ollama
+    restart: unless-stopped
