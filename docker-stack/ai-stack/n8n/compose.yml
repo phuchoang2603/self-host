@@ -19,40 +19,56 @@ services:
       - ${SHARED_FOLDER}:/files
     restart: always
 
-  ollama:
-    image: ollama/ollama:latest
-    hostname: ollama
-    network_mode: ollama
-    deploy:
-      resources:
-        reservations:
-          devices:
-            - driver: nvidia
-              count: 1
-              capabilities: [gpu]
-    environment:
-      OLLAMA_KEEP_ALIVE: -1
-      OLLAMA_FLASH_ATTENTION: 1
-      OLLAMA_KV_CACHE_TYPE: q4_0
-    volumes:
-      - ${APPDATA}/ollama:/root/.ollama
-    restart: unless-stopped
-
   mcp-gateway:
     image: docker/mcp-gateway
     hostname: mcp-gateway
-    network_mode: ollama
     ports:
       - "8811:8811"
     command:
-      - --servers=arxiv-mcp-server
-      - --catalog=/mcp/catalog.yaml
-      - --transport=sse
+      - --servers=arxiv-mcp-server,duckduckgo
+      - --static=true
+      - --transport=streaming
       - --port=8811
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./catalog.yaml:/mcp/catalog.yaml
+    depends_on:
+      - mcp-arxiv-server
+      - mcp-duckduckgo
 
-networks:
-  ollama:
-    driver: bridge
+  mcp-duckduckgo:
+    image: mcp/duckduckgo
+    entrypoint:
+      [
+        "/docker-mcp/misc/docker-mcp-bridge",
+        "python",
+        "-m",
+        "duckduckgo_mcp_server.server",
+      ]
+    init: true
+    security_opt:
+      - no-new-privileges
+    labels:
+      - docker-mcp=true
+      - docker-mcp-tool-type=mcp
+      - docker-mcp-name=duckduckgo
+      - docker-mcp-transport=stdio
+    volumes:
+      - type: image
+        source: docker/mcp-gateway
+        target: /docker-mcp
+
+  mcp-arxiv-server:
+    image: mcp/arxiv-mcp-server
+    entrypoint:
+      ["/docker-mcp/misc/docker-mcp-bridge", "python", "-m", "arxiv_mcp_server"]
+    init: true
+    security_opt:
+      - no-new-privileges
+    labels:
+      - docker-mcp=true
+      - docker-mcp-tool-type=mcp
+      - docker-mcp-name=arxiv-mcp-server
+      - docker-mcp-transport=stdio
+    volumes:
+      - type: image
+        source: docker/mcp-gateway
+        target: /docker-mcp
+      - ${SHARED_FOLDER}:/app/papers
