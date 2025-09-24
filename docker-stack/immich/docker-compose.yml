@@ -44,8 +44,9 @@ services:
     env_file:
       - .env
     restart: always
-    ports:
-      - 3003:3003
+    network_mode: host
+    # ports:
+    #   - 3003:3003
     healthcheck:
       disable: false
 

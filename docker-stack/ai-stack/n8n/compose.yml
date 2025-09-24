@@ -27,9 +27,31 @@ services:
       - "8811:8811"
     command:
       - --servers=arxiv-mcp-server
-      - --catalog=/mcp/catalog.yaml
+      - --static=true
       - --transport=streaming
       - --port=8811
+    depends_on:
+      - mcp-arxiv-mcp-server
+
+  mcp-arxiv-mcp-server:
+    image: mcp/arxiv-mcp-server
+    hostname: mcp-arxiv-mcp-server
+    network_mode: ollama
+    entrypoint:
+      ["/docker-mcp/misc/docker-mcp-bridge", "python", "-m", "arxiv_mcp_server"]
+    init: true
+    security_opt:
+      - no-new-privileges
+    environment:
+      - PYTHONUNBUFFERED=1
+      - ARXIV_STORAGE_PATH=/app/papers
+    labels:
+      - docker-mcp=true
+      - docker-mcp-tool-type=mcp
+      - docker-mcp-name=arxiv-mcp-server
+      - docker-mcp-transport=stdio
     volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
-      - ./catalog.yaml:/mcp/catalog.yaml
+      - type: image
+        source: docker/mcp-gateway
+        target: /docker-mcp
+      - ${SHARED_FOLDER}/arxiv_mcp:/app/papers
