@@ -22,53 +22,14 @@ services:
   mcp-gateway:
     image: docker/mcp-gateway
     hostname: mcp-gateway
+    network_mode: ollama
     ports:
       - "8811:8811"
     command:
-      - --servers=arxiv-mcp-server,duckduckgo
-      - --static=true
+      - --servers=arxiv-mcp-server
+      - --catalog=/mcp/catalog.yaml
       - --transport=streaming
       - --port=8811
-    depends_on:
-      - mcp-arxiv-server
-      - mcp-duckduckgo
-
-  mcp-duckduckgo:
-    image: mcp/duckduckgo
-    entrypoint:
-      [
-        "/docker-mcp/misc/docker-mcp-bridge",
-        "python",
-        "-m",
-        "duckduckgo_mcp_server.server",
-      ]
-    init: true
-    security_opt:
-      - no-new-privileges
-    labels:
-      - docker-mcp=true
-      - docker-mcp-tool-type=mcp
-      - docker-mcp-name=duckduckgo
-      - docker-mcp-transport=stdio
     volumes:
-      - type: image
-        source: docker/mcp-gateway
-        target: /docker-mcp
-
-  mcp-arxiv-server:
-    image: mcp/arxiv-mcp-server
-    entrypoint:
-      ["/docker-mcp/misc/docker-mcp-bridge", "python", "-m", "arxiv_mcp_server"]
-    init: true
-    security_opt:
-      - no-new-privileges
-    labels:
-      - docker-mcp=true
-      - docker-mcp-tool-type=mcp
-      - docker-mcp-name=arxiv-mcp-server
-      - docker-mcp-transport=stdio
-    volumes:
-      - type: image
-        source: docker/mcp-gateway
-        target: /docker-mcp
-      - ${SHARED_FOLDER}:/app/papers
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./catalog.yaml:/mcp/catalog.yaml

@@ -3,17 +3,13 @@ registry:
     title: "ArXiv MCP Server"
     description: "An MCP server that enables AI assistants to search, download, and read papers from the arXiv research repository."
     type: "server"
-    image: "arxiv-mcp-server:latest"
+    image: "mcp/arxiv-mcp-server"
     tools:
       - name: "search_papers"
       - name: "download_paper"
       - name: "list_papers"
       - name: "read_paper"
-      - name: "deep-paper-analysis"
-
-    env:
-      - name: "ARXIV_STORAGE_PATH"
-        value: "/data"
 
     volumes:
-      - "/mnt/storage/media/docs:/data"
+      - "/mnt/storage/media/docs:/app/papers"
+      # - "/home/ubuntu/repos/self-host/docker-stack/ai-stack/n8n/arxiv-mcp-server:/app"
