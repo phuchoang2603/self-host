@@ -32,6 +32,7 @@ services:
       - --port=8811
     depends_on:
       - mcp-arxiv-mcp-server
+    restart: always
 
   mcp-arxiv-mcp-server:
     image: mcp/arxiv-mcp-server
@@ -55,3 +56,47 @@ services:
         source: docker/mcp-gateway
         target: /docker-mcp
       - ${SHARED_FOLDER}/arxiv_mcp:/app/papers
+    restart: always
+
+  # # To download the required models before first run
+  docling-serve-initial:
+    image: ghcr.io/docling-project/docling-serve-cu126:main
+    network_mode: ollama
+    command:
+      - docling-tools
+      - models
+      - download
+      - --all
+    volumes:
+      - ${APPDATA}/n8n/docling_artifacts:/opt/app-root/src/.cache/docling/models
+    restart: "no"
+
+  # For document parsing
+  docling-serve:
+    image: ghcr.io/docling-project/docling-serve-cu126:main
+    network_mode: ollama
+    hostname: docling-serve
+    ports:
+      - "5001:5001"
+    environment:
+      DOCLING_SERVE_ENABLE_UI: "true"
+      NVIDIA_VISIBLE_DEVICES: "all"
+      DOCLING_SERVE_SCRATCH_PATH: "/scratch"
+      DOCLING_SERVE_ARTIFACTS_PATH: "/models"
+      DOCLING_SERVE_ENABLE_REMOTE_SERVICES: "true"
+      DOCLING_SERVE_ALLOW_EXTERNAL_PLUGINS: "true"
+    deploy: # This section is for compatibility with Swarm
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    volumes:
+      - ${SHARED_FOLDER}/docling_scratch:/scratch
+      - ${APPDATA}/n8n/docling_artifacts:/models
+    runtime: nvidia
+    restart: always
+    depends_on:
+      docling-serve-initial:
+        condition: service_completed_successfully
