@@ -1,45 +1,42 @@
 # Ref: https://trash-guides.info/
-name: media-stack
+name: servarr
 services:
-  qbittorrent:
+  qbittorrent-web:
+    hostname: servarr-qbittorrent-web
     container_name: qbittorrent
     image: lscr.io/linuxserver/qbittorrent:latest
-    networks:
-      - media
     environment:
       - PUID=0
       - PGID=0
       - TZ=${TZ}
-      - WEBUI_PORT=5080
+      - WEBUI_PORT=8080
     volumes:
-      - ${APPDATA}/qbittorrent/config:/config
-      - ${MEDIA_FOLDER}:/data
+      - ${APPDATA}/qbit:/config
+      - ${MEDIA_FOLDER}:/media
     ports:
-      - 5080:5080
+      - 8080:8080
       - 6881:6881
       - 6881:6881/udp
     restart: "unless-stopped"
 
   prowlarr:
+    hostname: servarr-prowlarr
     container_name: prowlarr
     image: linuxserver/prowlarr:latest
-    networks:
-      - media
     environment:
       - PUID=0
       - PGID=0
       - TZ=${TZ}
     volumes:
-      - ${APPDATA}/prowlarr/config:/config
+      - ${APPDATA}/prowlarr:/config
     ports:
       - 9696:9696
     restart: unless-stopped
 
   flaresolverr:
+    hostname: servarr-flaresolverr
     container_name: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
-    networks:
-      - media
     environment:
       - TZ=${TZ}
     ports:
@@ -47,13 +44,12 @@ services:
     restart: unless-stopped
 
   syncify:
+    hostname: servarr-syncify
     container_name: syncify
     image: thewicklowwolf/syncify:latest
-    networks:
-      - media
     volumes:
       - ${APPDATA}/syncify/config:/syncify/config
-      - ${MEDIA_FOLDER}/Music/:/syncify/downloads
+      - ${MEDIA_FOLDER}/music/:/syncify/downloads
     ports:
       - 5000:5000
     environment:
@@ -64,10 +60,9 @@ services:
     restart: unless-stopped
 
   jellyfin:
+    hostname: servarr-jellyfin
     container_name: jellyfin
     image: jellyfin/jellyfin
-    networks:
-      - media
     ports:
       - 8096:8096
     restart: unless-stopped
@@ -76,13 +71,9 @@ services:
       - PUID=0
       - TZ=${TZ}
     volumes:
-      - ${APPDATA}/jellyfin/config:/config
-      - ${MEDIA_FOLDER}:/data
+      - ${APPDATA}/jellyfin:/config
+      - ${MEDIA_FOLDER}:/media
       - jellyfin_cache:/cache
 
 volumes:
   jellyfin_cache:
-
-networks:
-  media:
-    external: true
