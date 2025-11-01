@@ -2,9 +2,7 @@ name: ollama
 services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:latest
-    container_name: open-webui
     restart: unless-stopped
-    network_mode: ollama
     environment:
       - PUID=0
       - PGID=0
@@ -14,12 +12,11 @@ services:
       - /etc/timezone:/etc/timezone:ro
       - ${APPDATA}/open-webui:/app/backend/data
     ports:
-      - "8081:8080" # Add this line to expose the port
+      - "8081:8080"
 
   ollama:
     image: ollama/ollama:latest
-    hostname: ollama
-    network_mode: ollama
+    restart: unless-stopped
     deploy:
       resources:
         reservations:
@@ -33,4 +30,5 @@ services:
       OLLAMA_KV_CACHE_TYPE: q4_0
     volumes:
       - ${APPDATA}/ollama:/root/.ollama
-    restart: unless-stopped
+    ports:
+      - "11434:11434"
