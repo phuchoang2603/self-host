@@ -2,7 +2,6 @@ services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
     hostname: n8n
-    network_mode: ollama
     ports:
       - "5678:5678"
     environment:
@@ -22,7 +21,6 @@ services:
   mcp-gateway:
     image: docker/mcp-gateway
     hostname: mcp-gateway
-    network_mode: ollama
     ports:
       - "8811:8811"
     command:
@@ -37,7 +35,6 @@ services:
   mcp-arxiv-mcp-server:
     image: mcp/arxiv-mcp-server
     hostname: mcp-arxiv-mcp-server
-    network_mode: ollama
     entrypoint:
       ["/docker-mcp/misc/docker-mcp-bridge", "python", "-m", "arxiv_mcp_server"]
     init: true
@@ -61,7 +58,6 @@ services:
   # # To download the required models before first run
   docling-serve-initial:
     image: ghcr.io/docling-project/docling-serve-cu126:main
-    network_mode: ollama
     command:
       - docling-tools
       - models
@@ -74,14 +70,12 @@ services:
   # For document parsing
   docling-serve:
     image: ghcr.io/docling-project/docling-serve-cu126:main
-    network_mode: ollama
     hostname: docling-serve
     ports:
       - "5001:5001"
     environment:
       DOCLING_SERVE_ENABLE_UI: "true"
       NVIDIA_VISIBLE_DEVICES: "all"
-      DOCLING_SERVE_SCRATCH_PATH: "/scratch"
       DOCLING_SERVE_ARTIFACTS_PATH: "/models"
       DOCLING_SERVE_ENABLE_REMOTE_SERVICES: "true"
       DOCLING_SERVE_ALLOW_EXTERNAL_PLUGINS: "true"
@@ -93,7 +87,6 @@ services:
               count: all
               capabilities: [gpu]
     volumes:
-      - ${SHARED_FOLDER}/docling_scratch:/scratch
       - ${APPDATA}/n8n/docling_artifacts:/models
     runtime: nvidia
     restart: always
