@@ -27,7 +27,7 @@ applications:
   # suwayomi:
   #   enabled: false
   #   destinationNamespace: media
-  #   path: k8s-deploy/media/my-chart
+  #   path: helm-charts/my-chart
   #   valuesFile: k8s-deploy/media/values/suwayomi.yaml
   #   nfsPV:
   #     manga:
@@ -42,7 +42,7 @@ applications:
   calibre:
     enabled: true
     destinationNamespace: calibre
-    path: k8s-deploy/media/my-chart
+    path: helm-charts/my-chart
     valuesFile: k8s-deploy/media/values/calibre.yaml
     nfsPV:
       books:
@@ -57,7 +57,7 @@ applications:
   stremio:
     enabled: true
     destinationNamespace: stremio
-    path: k8s-deploy/media/my-chart
+    path: helm-charts/my-chart
     valuesFile: k8s-deploy/media/values/stremio.yaml
     nfsPV:
       stremio-server:
@@ -109,7 +109,7 @@ applications:
   syncify:
     enabled: true
     destinationNamespace: syncify
-    path: k8s-deploy/media/my-chart
+    path: helm-charts/my-chart
     valuesFile: k8s-deploy/media/values/syncify.yaml
     nfsPV:
       music:
