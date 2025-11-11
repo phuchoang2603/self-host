@@ -56,17 +56,17 @@ services:
       - ${SHARED_FOLDER}/arxiv_mcp:/app/papers
     restart: always
 
-  # # To download the required models before first run
-  docling-serve-initial:
-    image: ghcr.io/docling-project/docling-serve-cu126:main
-    command:
-      - docling-tools
-      - models
-      - download
-      - --all
-    volumes:
-      - ${APPDATA}/n8n/docling_artifacts:/opt/app-root/src/.cache/docling/models
-    restart: "no"
+  # To download the required models before first run
+  # docling-serve-initial:
+  #   image: ghcr.io/docling-project/docling-serve-cu126:main
+  #   command:
+  #     - docling-tools
+  #     - models
+  #     - download
+  #     - --all
+  #   volumes:
+  #     - ${APPDATA}/n8n/docling_artifacts:/opt/app-root/src/.cache/docling/models
+  #   restart: "no"
 
   # For document parsing
   docling-serve:
@@ -91,6 +91,6 @@ services:
       - ${APPDATA}/n8n/docling_artifacts:/models
     runtime: nvidia
     restart: always
-    depends_on:
-      docling-serve-initial:
-        condition: service_completed_successfully
+    # depends_on:
+    #   docling-serve-initial:
+    #     condition: service_completed_successfully
