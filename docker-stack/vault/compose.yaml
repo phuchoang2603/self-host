@@ -1,0 +1,16 @@
+services:
+  vault:
+    image: hashicorp/vault:1.19.0
+    container_name: vault
+    command: server
+    network_mode: nginx
+    restart: unless-stopped
+    cap_add:
+      - IPC_LOCK
+    volumes:
+      - /mnt/storage/appdata/vault:/vault/file
+      - ./config:/vault/config
+
+networks:
+  nginx:
+    driver: bridge
