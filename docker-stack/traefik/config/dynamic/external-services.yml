@@ -1,6 +1,6 @@
 http:
   routers:
-    my-external-service:
+    proxmox:
       rule: "Host(`proxmox.home.phuchoang.sbs`)"
       entryPoints:
         - websecure
@@ -9,7 +9,7 @@ http:
         certResolver: letsencrypt
 
   services:
-    my-external-service:
+    proxmox:
       loadBalancer:
         servers:
           - url: "https://10.69.1.1:8006"
