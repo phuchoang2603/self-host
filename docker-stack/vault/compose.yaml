@@ -3,6 +3,8 @@ services:
     image: hashicorp/vault:1.19.0
     container_name: vault
     command: server
+    networks:
+      - proxy
     restart: unless-stopped
     environment:
       VAULT_LOCAL_CONFIG: |
@@ -26,3 +28,14 @@ services:
       - IPC_LOCK
     volumes:
       - /mnt/storage/appdata/vault:/vault/file
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.vault.rule=Host(`vault.home.phuchoang.sbs`)"
+      - "traefik.http.routers.vault.entrypoints=websecure"
+      - "traefik.http.routers.vault.tls=true"
+      - "traefik.http.routers.vault.tls.certresolver=cloudflare"
+      - "traefik.http.services.vault.loadbalancer.server.port=8200"
+
+networks:
+  proxy:
+    external: true

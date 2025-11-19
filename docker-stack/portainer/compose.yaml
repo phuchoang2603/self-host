@@ -11,4 +11,18 @@ services:
     volumes:
       - ${APPDATA}/_data:/data
       - /var/run/docker.sock:/var/run/docker.sock
+    networks:
+      - proxy
     privileged: false
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.portainer.rule=Host(`portainer.home.phuchoang.sbs`)"
+      - "traefik.http.routers.portainer.entrypoints=websecure"
+      - "traefik.http.routers.portainer.tls=true"
+      - "traefik.http.routers.portainer.tls.certresolver=cloudflare"
+      - "traefik.http.services.portainer.loadbalancer.server.port=9443"
+      - "traefik.http.services.portainer.loadbalancer.server.scheme=https"
+
+networks:
+  proxy:
+    external: true

@@ -8,20 +8,27 @@ services:
       - TZ=${TZ}
     hostname: suwayomi
     image: ghcr.io/suwayomi/suwayomi-server:preview
-    ports:
-      - 4567:4567
+    networks:
+      - proxy
     restart: always
     volumes:
       - ${MANGA_FOLDER}:/home/suwayomi/data
       - ${APPDATA}/data:/home/suwayomi/.local/share/Tachidesk
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.suwayomi.rule=Host(`suwayomi.home.phuchoang.sbs`)"
+      - "traefik.http.routers.suwayomi.entrypoints=websecure"
+      - "traefik.http.routers.suwayomi.tls=true"
+      - "traefik.http.routers.suwayomi.tls.certresolver=cloudflare"
+      - "traefik.http.services.suwayomi.loadbalancer.server.port=4567"
 
   flaresolverr:
     environment:
       - TZ=${TZ}
     hostname: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
-    ports:
-      - 8191:8191
+    networks:
+      - proxy
     restart: unless-stopped
 
   manga-image-translator:
@@ -29,6 +36,8 @@ services:
     #   context: ${APPDATA}/manga-image-translator
     image: ghcr.io/phuchoang2603/manga-image-translator:v0.1.0
     command: batch-script.py
+    networks:
+      - proxy
     volumes:
       - ${APPDATA}/manga-image-translator/:/app/
       - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
@@ -42,3 +51,7 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
+
+networks:
+  proxy:
+    external: true

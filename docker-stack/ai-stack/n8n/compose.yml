@@ -2,8 +2,6 @@ services:
   n8n:
     image: docker.n8n.io/n8nio/n8n
     hostname: n8n
-    ports:
-      - "5678:5678"
     environment:
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
       - N8N_HOST=${SUBDOMAIN}.${DOMAIN_NAME}
@@ -18,12 +16,19 @@ services:
       - ${APPDATA}/n8n/storage:/home/node/.n8n
       - ${SHARED_FOLDER}:${SHARED_FOLDER}
     restart: always
+    networks:
+      - proxy
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.n8n.rule=Host(`n8n.home.phuchoang.sbs`)"
+      - "traefik.http.routers.n8n.entrypoints=websecure"
+      - "traefik.http.routers.n8n.tls=true"
+      - "traefik.http.routers.n8n.tls.certresolver=cloudflare"
+      - "traefik.http.services.n8n.loadbalancer.server.port=5678"
 
   mcp-gateway:
     image: docker/mcp-gateway
     hostname: mcp-gateway
-    ports:
-      - "8811:8811"
     command:
       - --servers=arxiv-mcp-server
       - --static=true
@@ -32,6 +37,8 @@ services:
     depends_on:
       - mcp-arxiv-mcp-server
     restart: always
+    networks:
+      - proxy
 
   mcp-arxiv-mcp-server:
     image: mcp/arxiv-mcp-server
@@ -55,6 +62,8 @@ services:
         target: /docker-mcp
       - ${SHARED_FOLDER}/arxiv_mcp:/app/papers
     restart: always
+    networks:
+      - proxy
 
   # To download the required models before first run
   # docling-serve-initial:
@@ -72,8 +81,6 @@ services:
   docling-serve:
     image: ghcr.io/docling-project/docling-serve-cu126:main
     hostname: docling-serve
-    ports:
-      - "5001:5001"
     environment:
       DOCLING_SERVE_ENABLE_UI: "true"
       NVIDIA_VISIBLE_DEVICES: "all"
@@ -91,6 +98,12 @@ services:
       - ${APPDATA}/n8n/docling_artifacts:/models
     runtime: nvidia
     restart: always
+    networks:
+      - proxy
     # depends_on:
     #   docling-serve-initial:
     #     condition: service_completed_successfully
+
+networks:
+  proxy:
+    external: true
