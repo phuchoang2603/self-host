@@ -33,7 +33,7 @@ services:
       - "traefik.http.routers.vault.rule=Host(`vault.home.phuchoang.sbs`)"
       - "traefik.http.routers.vault.entrypoints=websecure"
       - "traefik.http.routers.vault.tls=true"
-      - "traefik.http.routers.vault.tls.certresolver=cloudflare"
+      - "traefik.http.routers.vault.tls.certresolver=letsencrypt"
       - "traefik.http.services.vault.loadbalancer.server.port=8200"
 
 networks:

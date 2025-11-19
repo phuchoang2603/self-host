@@ -29,7 +29,7 @@ services:
       - "traefik.http.routers.xinference.rule=Host(`xinference.home.phuchoang.sbs`)"
       - "traefik.http.routers.xinference.entrypoints=websecure"
       - "traefik.http.routers.xinference.tls=true"
-      - "traefik.http.routers.xinference.tls.certresolver=cloudflare"
+      - "traefik.http.routers.xinference.tls.certresolver=letsencrypt"
       - "traefik.http.services.xinference.loadbalancer.server.port=9997"
 
   tts-worker:

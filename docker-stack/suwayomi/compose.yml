@@ -19,7 +19,7 @@ services:
       - "traefik.http.routers.suwayomi.rule=Host(`suwayomi.home.phuchoang.sbs`)"
       - "traefik.http.routers.suwayomi.entrypoints=websecure"
       - "traefik.http.routers.suwayomi.tls=true"
-      - "traefik.http.routers.suwayomi.tls.certresolver=cloudflare"
+      - "traefik.http.routers.suwayomi.tls.certresolver=letsencrypt"
       - "traefik.http.services.suwayomi.loadbalancer.server.port=4567"
 
   flaresolverr:
