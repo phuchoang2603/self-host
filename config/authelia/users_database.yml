@@ -1,8 +1,0 @@
-users:
-  phuchoang2603:
-    disabled: false
-    displayname: "Felix"
-    password: "$argon2id$v=19$m=1024,t=1,p=8$S3hHTEJXbllMdVVCcU9QNw$T8M0xA1Fsu5N4eNR3IYFIYIA6bibTDVXqfDBuEJaAPc"
-    email: xuanphuc.a1gv@gmail.com
-    groups:
-      - admins
