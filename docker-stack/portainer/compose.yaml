@@ -22,6 +22,8 @@ services:
       - "traefik.http.routers.portainer.tls.certresolver=letsencrypt"
       - "traefik.http.services.portainer.loadbalancer.server.port=9443"
       - "traefik.http.services.portainer.loadbalancer.server.scheme=https"
+      - "traefik.http.services.portainer.loadbalancer.serversTransport=insecureTransport"
+      - "traefik.http.serversTransports.insecureTransport.insecureSkipVerify=true"
 
 networks:
   proxy:
