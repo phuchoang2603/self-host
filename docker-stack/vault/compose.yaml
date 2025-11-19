@@ -5,11 +5,28 @@ services:
     command: server
     network_mode: nginx
     restart: unless-stopped
+    environment:
+      VAULT_LOCAL_CONFIG: |
+        {
+          "storage": {
+            "file": {
+              "path": "/vault/file"
+            }
+          },
+          "listener": {
+            "tcp": {
+              "address": "0.0.0.0:8200",
+              "tls_disable": true
+            }
+          },
+          "api_addr": "http://0.0.0.0:8200",
+          "ui": true,
+          "disable_mlock": false
+        }
     cap_add:
       - IPC_LOCK
     volumes:
       - /mnt/storage/appdata/vault:/vault/file
-      - ./config:/vault/config
 
 networks:
   nginx:
