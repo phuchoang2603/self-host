@@ -8,7 +8,6 @@ services:
       - TZ=${TZ}
     hostname: suwayomi
     image: ghcr.io/suwayomi/suwayomi-server:preview
-    network_mode: nginx
     ports:
       - 4567:4567
     restart: always
@@ -21,7 +20,6 @@ services:
       - TZ=${TZ}
     hostname: flaresolverr
     image: ghcr.io/flaresolverr/flaresolverr:latest
-    network_mode: nginx
     ports:
       - 8191:8191
     restart: unless-stopped
@@ -31,7 +29,6 @@ services:
     #   context: ${APPDATA}/manga-image-translator
     image: ghcr.io/phuchoang2603/manga-image-translator:v0.1.0
     command: batch-script.py
-    network_mode: nginx
     volumes:
       - ${APPDATA}/manga-image-translator/:/app/
       - ${APPDATA}/facehuggingcache:/root/.cache/huggingface/
@@ -45,7 +42,3 @@ services:
             - driver: nvidia
               count: all
               capabilities: [gpu]
-
-networks:
-  nginx:
-    driver: bridge
