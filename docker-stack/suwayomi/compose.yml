@@ -1,7 +1,6 @@
 name: suwayomi
 services:
   suwayomi:
-    container_name: suwayomi
     environment:
       - EXTENSION_REPOS=["https://raw.githubusercontent.com/keiyoushi/extensions/repo/index.min.json"]
       - FLARESOLVERR_ENABLED=true
@@ -18,7 +17,6 @@ services:
       - ${APPDATA}/data:/home/suwayomi/.local/share/Tachidesk
 
   flaresolverr:
-    container_name: flaresolverr
     environment:
       - TZ=${TZ}
     hostname: flaresolverr
@@ -32,7 +30,6 @@ services:
     # build:
     #   context: ${APPDATA}/manga-image-translator
     image: ghcr.io/phuchoang2603/manga-image-translator:v0.1.0
-    container_name: manga-image-translator
     command: batch-script.py
     network_mode: nginx
     volumes:
@@ -41,11 +38,13 @@ services:
       - ${MANGA_FOLDER}:/app/data
     ipc: host
     # For GPU
-    deploy:
+    deploy: # This section is for compatibility with Swarm
       resources:
         reservations:
           devices:
-            - capabilities: [gpu]
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
 
 networks:
   nginx:
