@@ -1,7 +1,5 @@
 services:
   postgresql:
-    env_file:
-      - .env
     environment:
       POSTGRES_DB: ${PG_DB:-authentik}
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
@@ -24,8 +22,6 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    env_file:
-      - .env
     environment:
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
@@ -35,7 +31,6 @@ services:
     image: ${AUTHENTIK_IMAGE:-ghcr.io/goauthentik/server}:${AUTHENTIK_TAG:-2025.10.1}
     ports:
       - ${COMPOSE_PORT_HTTP:-9000}:9000
-      - ${COMPOSE_PORT_HTTPS:-9443}:9443
     restart: unless-stopped
 
   worker:
@@ -43,8 +38,6 @@ services:
     depends_on:
       postgresql:
         condition: service_healthy
-    env_file:
-      - .env
     environment:
       AUTHENTIK_POSTGRESQL__HOST: postgresql
       AUTHENTIK_POSTGRESQL__NAME: ${PG_DB:-authentik}
